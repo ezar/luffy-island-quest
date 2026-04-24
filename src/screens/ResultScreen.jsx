@@ -14,7 +14,8 @@ export default function ResultScreen() {
   const players = useGameStore(s => s.players)
   const islandResults = useGameStore(s => s.islandResults)
   const advanceTurn = useGameStore(s => s.advanceTurn)
-  const { t } = useLang()
+  const { t, lang } = useLang()
+  const txt = (f) => (f && typeof f === 'object' ? f[lang] ?? f.es : f)
 
   const island = islands[currentIslandIdx]
   const player = players[currentPlayerIdx]
@@ -37,7 +38,7 @@ export default function ResultScreen() {
             <span className={styles.islandEmoji}>{island.emoji}</span>
             <div>
               <div className={styles.islandName}>{island.name}</div>
-              <div className={styles.islandSub}>{island.subtitle}</div>
+              <div className={styles.islandSub}>{txt(island.subtitle)}</div>
             </div>
           </div>
 
@@ -67,7 +68,7 @@ export default function ResultScreen() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.2 }}
           >
-            <p>{island.completedStory}</p>
+            <p>{txt(island.completedStory)}</p>
           </motion.div>
 
           <motion.div
@@ -77,7 +78,7 @@ export default function ResultScreen() {
             transition={{ delay: 2.5 }}
           >
             <span className={styles.funFactIcon}>💡</span>
-            <p>{island.funFact}</p>
+            <p>{txt(island.funFact)}</p>
           </motion.div>
 
           <motion.button

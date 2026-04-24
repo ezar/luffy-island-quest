@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './DodgeGame.module.css'
+import LuffyHatSvg from '../components/LuffyHatSvg'
 
 export default function DodgeGame({ difficulty, onComplete, timeLimit = null }) {
   const maxLives = difficulty === 'easy' ? 3 : 2
@@ -141,7 +142,9 @@ export default function DodgeGame({ difficulty, onComplete, timeLimit = null }) 
         {bolts.map(b => (
           <div key={b.id} className={styles.bolt} style={{ left: `${b.x}%`, top: `${b.y}%` }}>⚡</div>
         ))}
-        <div className={`${styles.luffy} ${hitFlash ? styles.luffyHit : ''}`} style={{ left: `${luffyX}%` }}>👒</div>
+        <div className={`${styles.luffy} ${hitFlash ? styles.luffyHit : ''}`} style={{ left: `${luffyX}%` }}>
+          <LuffyHatSvg size={72} />
+        </div>
       </div>
       <div className={styles.hint}>← → para moverse</div>
       {status === 'won' && <div className={styles.feedbackGood}>✅ ¡Luffy sobrevivió!</div>}

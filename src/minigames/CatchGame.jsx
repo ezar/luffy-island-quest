@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import styles from './CatchGame.module.css';
+import LuffyHatSvg from '../components/LuffyHatSvg';
 
 const DIFFICULTY_CONFIG = {
   easy: {
@@ -304,7 +305,7 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
           </div>
         ))}
         <div className={styles.hat} style={{ left: hatX + '%' }}>
-          👒
+          <LuffyHatSvg size={88} />
         </div>
       </div>
 

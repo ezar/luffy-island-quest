@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
 import { useLang } from '../i18n/useLang'
@@ -42,10 +42,10 @@ export default function IslandScreen() {
   const char = player ? characters.find(c => c.id === player.characterId) : null
   const Minigame = MINIGAME_MAP[island.minigame]
 
-  const handleMinigameComplete = (stars, berries) => {
+  const handleMinigameComplete = useCallback((stars, berries) => {
     recordResult(currentIslandIdx, currentPlayerIdx, stars, berries)
     setPhase('result')
-  }
+  }, [recordResult, currentIslandIdx, currentPlayerIdx, setPhase])
 
   return (
     <div className={styles.screen}>

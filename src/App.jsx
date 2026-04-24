@@ -6,6 +6,7 @@ import IslandScreen from './screens/IslandScreen'
 import ResultScreen from './screens/ResultScreen'
 import EndScreen from './screens/EndScreen'
 import LuffyHat from './components/LuffyHat'
+import Footer from './components/Footer'
 import styles from './App.module.css'
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
       <button className={styles.langBtn} onClick={toggleLang} aria-label="Toggle language">
         {t.langToggle}
       </button>
+      <Footer />
     </>
   )
 }

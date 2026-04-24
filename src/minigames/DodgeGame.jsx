@@ -29,6 +29,19 @@ export default function DodgeGame({ difficulty, onComplete, timeLimit = null }) 
   const rafRef = useRef()
   const boltsRef = useRef([])
 
+  const updateLuffyX = useCallback((val) => {
+    const clamped = Math.max(5, Math.min(95, val))
+    luffyXRef.current = clamped
+    if (luffyDivRef.current) luffyDivRef.current.style.left = clamped + '%'
+  }, [])
+
+  const handlePointerMove = useCallback((e) => {
+    if (statusRef.current !== 'playing') return
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = ((e.clientX - rect.left) / rect.width) * 100
+    updateLuffyX(x)
+  }, [updateLuffyX])
+
   const endGame = useCallback((livesLeft) => {
     if (doneRef.current) return
     doneRef.current = true
@@ -118,19 +131,6 @@ export default function DodgeGame({ difficulty, onComplete, timeLimit = null }) 
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [updateLuffyX])
-
-  const updateLuffyX = useCallback((val) => {
-    const clamped = Math.max(5, Math.min(95, val))
-    luffyXRef.current = clamped
-    if (luffyDivRef.current) luffyDivRef.current.style.left = clamped + '%'
-  }, [])
-
-  const handlePointerMove = useCallback((e) => {
-    if (statusRef.current !== 'playing') return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = ((e.clientX - rect.left) / rect.width) * 100
-    updateLuffyX(x)
   }, [updateLuffyX])
 
   const pct = (timeLeft / totalTime) * 100

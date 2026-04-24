@@ -1,8 +1,6 @@
 import { createDeflate } from 'zlib'
 import { createWriteStream } from 'fs'
 import { mkdir } from 'fs/promises'
-import { pipeline } from 'stream/promises'
-import { Readable, PassThrough } from 'stream'
 
 // CRC32 table
 const CRC_TABLE = new Uint32Array(256)
@@ -16,7 +14,6 @@ function crc32(buf) {
   for (const b of buf) crc = CRC_TABLE[(crc ^ b) & 0xff] ^ (crc >>> 8)
   return (crc ^ 0xffffffff) >>> 0
 }
-
 function chunk(type, data) {
   const typeBytes = Buffer.from(type, 'ascii')
   const len = Buffer.allocUnsafe(4)
@@ -27,31 +24,97 @@ function chunk(type, data) {
   return Buffer.concat([len, typeBytes, data, crcVal])
 }
 
-async function makePNG(size, r, g, b, outPath) {
-  // IHDR
-  const ihdr = Buffer.allocUnsafe(13)
-  ihdr.writeUInt32BE(size, 0)   // width
-  ihdr.writeUInt32BE(size, 4)   // height
-  ihdr[8] = 8   // bit depth
-  ihdr[9] = 2   // color type: RGB
-  ihdr[10] = 0  // compression
-  ihdr[11] = 0  // filter
-  ihdr[12] = 0  // interlace
-
-  // Raw image data: each row = filter byte (0) + R G B per pixel
+// Draw a pixel at (px, py) with color [r,g,b] into the raw buffer
+function setPixel(raw, size, px, py, r, g, b) {
+  if (px < 0 || px >= size || py < 0 || py >= size) return
   const rowSize = 1 + size * 3
-  const raw = Buffer.allocUnsafe(size * rowSize)
-  for (let y = 0; y < size; y++) {
-    const rowStart = y * rowSize
-    raw[rowStart] = 0 // filter: None
-    for (let x = 0; x < size; x++) {
-      raw[rowStart + 1 + x * 3] = r
-      raw[rowStart + 2 + x * 3] = g
-      raw[rowStart + 3 + x * 3] = b
+  const i = py * rowSize + 1 + px * 3
+  raw[i] = r; raw[i + 1] = g; raw[i + 2] = b
+}
+
+// Fill a filled ellipse
+function fillEllipse(raw, size, cx, cy, rx, ry, r, g, b) {
+  for (let y = Math.floor(cy - ry); y <= Math.ceil(cy + ry); y++) {
+    for (let x = Math.floor(cx - rx); x <= Math.ceil(cx + rx); x++) {
+      const dx = (x - cx) / rx, dy = (y - cy) / ry
+      if (dx * dx + dy * dy <= 1) setPixel(raw, size, x, y, r, g, b)
     }
   }
+}
 
-  // Compress raw data
+// Fill a rectangle
+function fillRect(raw, size, x0, y0, w, h, r, g, b) {
+  for (let y = y0; y < y0 + h; y++)
+    for (let x = x0; x < x0 + w; x++)
+      setPixel(raw, size, x, y, r, g, b)
+}
+
+// Draw a thick horizontal arc (brim of hat)
+function fillArc(raw, size, cx, cy, rx, ry, thickness, r, g, b) {
+  fillEllipse(raw, size, cx, cy, rx, ry, r, g, b)
+  fillEllipse(raw, size, cx, cy, rx - thickness, ry - thickness, ...bg)
+}
+
+const bg = [10, 34, 64]       // #0A2240 navy
+const gold = [232, 181, 20]   // #E8B514 straw
+const goldDark = [184, 129, 10] // #B8810A dark straw
+const red = [196, 30, 30]     // #C41E1E band red
+
+async function makePNG(size, outPath) {
+  const rowSize = 1 + size * 3
+  const raw = Buffer.allocUnsafe(size * rowSize)
+
+  // Background fill
+  for (let y = 0; y < size; y++) {
+    raw[y * rowSize] = 0
+    for (let x = 0; x < size; x++) setPixel(raw, size, x, y, ...bg)
+  }
+
+  const s = size / 192  // scale factor
+
+  // ── Straw hat ──────────────────────────────────────────
+  const cx = size / 2
+  const cy = size * 0.52
+
+  // Brim shadow (dark ellipse, slightly offset down)
+  fillEllipse(raw, size, cx, cy * 1.04, 78 * s, 18 * s, ...goldDark)
+
+  // Brim top (gold ellipse)
+  fillEllipse(raw, size, cx, cy, 80 * s, 17 * s, ...gold)
+
+  // Crown (trapezoid approximation via stacked ellipses)
+  for (let i = 0; i <= 52; i++) {
+    const t = i / 52
+    const ew = (44 + (80 - 44) * (1 - Math.pow(1 - t, 1.4))) * s
+    fillEllipse(raw, size, cx, cy - i * s, ew, 12 * s, ...gold)
+  }
+
+  // Red band across the hat
+  const bandY = cy - 10 * s
+  for (let i = 0; i <= 14; i++) {
+    const t = i / 14
+    const ew = (52 + (76 - 52) * t) * s
+    fillEllipse(raw, size, cx, bandY + i * s, ew, 9 * s, ...red)
+  }
+
+  // Brim top re-draw over crown base (clean edge)
+  fillEllipse(raw, size, cx, cy, 80 * s, 16 * s, ...gold)
+
+  // Skull (small, centered on crown top)
+  const skullCX = cx, skullCY = cy - 58 * s
+  fillEllipse(raw, size, skullCX, skullCY, 14 * s, 12 * s, [255, 255, 245])
+  // Eyes
+  fillEllipse(raw, size, skullCX - 5 * s, skullCY - 1 * s, 3 * s, 3 * s, ...bg)
+  fillEllipse(raw, size, skullCX + 5 * s, skullCY - 1 * s, 3 * s, 3 * s, ...bg)
+  // Teeth line
+  for (let i = -3; i <= 3; i += 2) {
+    fillRect(raw, size,
+      Math.round(skullCX + i * s - 1 * s), Math.round(skullCY + 5 * s),
+      Math.round(2 * s), Math.round(3 * s),
+      ...bg)
+  }
+
+  // Compress & write
   const compressed = await new Promise((resolve, reject) => {
     const chunks = []
     const deflate = createDeflate({ level: 9 })
@@ -61,8 +124,12 @@ async function makePNG(size, r, g, b, outPath) {
     deflate.end(raw)
   })
 
+  const ihdr = Buffer.allocUnsafe(13)
+  ihdr.writeUInt32BE(size, 0); ihdr.writeUInt32BE(size, 4)
+  ihdr[8] = 8; ihdr[9] = 2; ihdr[10] = 0; ihdr[11] = 0; ihdr[12] = 0
+
   const png = Buffer.concat([
-    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), // PNG signature
+    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
     chunk('IHDR', ihdr),
     chunk('IDAT', compressed),
     chunk('IEND', Buffer.alloc(0)),
@@ -78,10 +145,6 @@ async function makePNG(size, r, g, b, outPath) {
   console.log(`Created ${outPath} (${png.length} bytes)`)
 }
 
-// Navy blue background with gold accent — matches theme_color #0A2240
-// RGB for #0A2240
-const [R, G, B] = [10, 34, 64]
-
-await makePNG(192, R, G, B, 'public/icons/icon-192.png')
-await makePNG(512, R, G, B, 'public/icons/icon-512.png')
+await makePNG(192, 'public/icons/icon-192.png')
+await makePNG(512, 'public/icons/icon-512.png')
 console.log('Done!')

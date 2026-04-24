@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
 import { characters } from '../data/characters'
 import OceanBackground from '../components/OceanBackground'
+import CharacterIcon from '../components/CharacterIcon'
 import styles from './StartScreen.module.css'
 
 export default function StartScreen() {
@@ -97,7 +98,9 @@ export default function StartScreen() {
                     style={ch ? { borderColor: ch.color } : {}}
                     onClick={() => setSelectingFor(i)}
                   >
-                    <span className={styles.panelEmoji}>{ch ? ch.emoji : '❓'}</span>
+                    <span className={styles.panelEmoji}>
+                      {ch ? <CharacterIcon id={ch.id} size={36} /> : '❓'}
+                    </span>
                     <span className={styles.panelNum}>J{i + 1}</span>
                     <span className={styles.panelChar}>{ch ? ch.name.split(' ')[0] : '—'}</span>
                   </div>
@@ -125,7 +128,7 @@ export default function StartScreen() {
                     title={ch.catchphrase}
                     aria-label={ch.name}
                   >
-                    <span className={styles.charEmoji}>{ch.emoji}</span>
+                    <span className={styles.charEmoji}><CharacterIcon id={ch.id} size={56} /></span>
                     <span className={styles.charName}>{ch.name.split(' ').pop()}</span>
                   </button>
                 )

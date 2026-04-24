@@ -1,5 +1,6 @@
 import styles from './PlayerCard.module.css'
 import { characters } from '../data/characters'
+import CharacterIcon from './CharacterIcon'
 
 /**
  * Tarjeta de un jugador con personaje, nombre y puntuación.
@@ -17,7 +18,7 @@ export default function PlayerCard({ player, active = false, compact = false }) 
       style={{ '--player-color': char.color }}
       aria-label={`${player.name}: ${player.berries} berries, ${player.stars} estrellas`}
     >
-      <span className={styles.emoji}>{char.emoji}</span>
+      <span className={styles.emoji}><CharacterIcon id={char.id} size={compact ? 36 : 48} /></span>
       <div className={styles.info}>
         <div className={styles.name}>{player.name}</div>
         {!compact && <div className={styles.char}>{char.name}</div>}

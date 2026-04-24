@@ -9,13 +9,23 @@
   padding: 0;
 }
 
-html, body, #root {
-  width: 100%;
+html {
   height: 100%;
   overflow: hidden;
   overscroll-behavior: none;
-  touch-action: none;
-  position: fixed; /* prevents iOS Safari bounce scroll */
+}
+
+body {
+  position: fixed;   /* prevents iOS Safari bounce */
+  inset: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 body {

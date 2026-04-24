@@ -1,0 +1,163 @@
+export const translations = {
+  es: {
+    // StartScreen
+    subtitle: 'La Gran Aventura del Sombrero de Paja',
+    difficulty: 'Dificultad:',
+    easy: '⭐ Fácil',
+    hard: '💀 Difícil',
+    players: 'Jugadores:',
+    chooseCrewmate: (n) => `Jugador ${n}: elige tripulante`,
+    crewReady: 'Tripulación lista ✓',
+    sail: '🚢 ¡ZARPAR!',
+
+    // MapScreen
+    mapTitle: '☠ Gran Line ☠',
+    tapToPlay: 'Toca tu isla para comenzar',
+    turnOf: (name) => `¡Turno de ${name}!`,
+
+    // IslandScreen
+    startMinigame: '⚓ ¡Empezar!',
+    loading: 'Cargando…',
+
+    // ResultScreen
+    continueBtn: '🚢 Continuar',
+    finalRankingBtn: '👑 Ver Ranking Final',
+
+    // EndScreen
+    adventureOver: '¡La aventura ha terminado!',
+    endStory: 'La tripulación del Thousand Sunny ha llegado a Raftel! El legendario tesoro existe de verdad. Las palabras del gran pirata Gol D. Roger resuenan en el aire:',
+    endQuote: '"¡Lo dejé todo allí! ¡Búscalo!"',
+    finalRanking: '⚓ Clasificación Final',
+    pirateKing: (name) => `¡${name} es el Rey Pirata!`,
+    newAdventure: '🏴‍☠️ Nueva Aventura',
+
+    // Minigames shared
+    attempts: (n) => `💪 Intentos: ${n}`,
+    timeLeft: (t) => `⏱️ ${t}s`,
+    wrongOrder: '❌ ¡Orden incorrecto! Inténtalo de nuevo.',
+    correct: '✅ ¡CORRECTO! ¡ROBIN LIBRE!',
+    timeout: '⏱️ ¡Tiempo agotado!',
+    missed: (n, max) => `❌ ${n}/${max}`,
+    caught: (n, target) => `🍖 ${n}/${target}`,
+    lives: '❤️',
+    deadHearts: '🖤',
+    moveHint: '← → para moverse',
+    rhythmHint: '← ↓ ↑ →',
+    memorizeHint: '👀 ¡Memoriza!',
+    yourTurn: '🎯 ¡Tu turno!',
+
+    // CatchGame
+    catchWon: '🎩 ¡Atrapaste toda la carne!',
+    catchLost: '💀 ¡La carne se perdió!',
+
+    // MemoryGame
+    memoryWon: '✅ ¡Todos los pares encontrados!',
+    memoryLost: '⏱️ ¡Tiempo agotado!',
+    mismatches: (n) => `❌ ${n}`,
+
+    // RhythmGame
+    hits: (n, total) => `🎵 ${n}/${total}`,
+    rhythmWon: '✅ ¡Ritmo perfecto!',
+    rhythmLost: '❌ ¡Fuera de ritmo!',
+
+    // DodgeGame
+    dodgeWon: '✅ ¡Luffy sobrevivió!',
+    dodgeLost: '💀 ¡Luffy fue fulminado!',
+
+    // PuzzleGame
+    wallClue: 'Pistas del muro:',
+    robinNeedsHelp: '🌸 Robin: ¡Necesito tu ayuda!',
+    robinFree: '🌸 Robin: ¡Gracias! ¡Libertad!',
+
+    // FinalGame
+    round: (r, total) => `⚓ Ronda ${r}/${total}`,
+    sequence: (n) => `Secuencia: ${n}`,
+    errors: (n, max) => `❌ ${n}/${max}`,
+    finalWon: '👑 ¡ONE PIECE!',
+    finalLost: '💀 ¡Error!',
+
+    // Language toggle
+    langToggle: 'EN',
+  },
+
+  en: {
+    // StartScreen
+    subtitle: 'The Grand Adventure of the Straw Hat',
+    difficulty: 'Difficulty:',
+    easy: '⭐ Easy',
+    hard: '💀 Hard',
+    players: 'Players:',
+    chooseCrewmate: (n) => `Player ${n}: choose crewmate`,
+    crewReady: 'Crew ready ✓',
+    sail: '🚢 SET SAIL!',
+
+    // MapScreen
+    mapTitle: '☠ Grand Line ☠',
+    tapToPlay: 'Tap your island to begin',
+    turnOf: (name) => `${name}'s turn!`,
+
+    // IslandScreen
+    startMinigame: '⚓ Start!',
+    loading: 'Loading…',
+
+    // ResultScreen
+    continueBtn: '🚢 Continue',
+    finalRankingBtn: '👑 See Final Ranking',
+
+    // EndScreen
+    adventureOver: 'The adventure is over!',
+    endStory: 'The Thousand Sunny crew has reached Raftel! The legendary treasure truly exists. The words of the great pirate Gol D. Roger echo in the air:',
+    endQuote: '"I left it all there! Go find it!"',
+    finalRanking: '⚓ Final Ranking',
+    pirateKing: (name) => `${name} is the Pirate King!`,
+    newAdventure: '🏴‍☠️ New Adventure',
+
+    // Minigames shared
+    attempts: (n) => `💪 Attempts: ${n}`,
+    timeLeft: (t) => `⏱️ ${t}s`,
+    wrongOrder: '❌ Wrong order! Try again.',
+    correct: '✅ CORRECT! ROBIN IS FREE!',
+    timeout: '⏱️ Time\'s up!',
+    missed: (n, max) => `❌ ${n}/${max}`,
+    caught: (n, target) => `🍖 ${n}/${target}`,
+    lives: '❤️',
+    deadHearts: '🖤',
+    moveHint: '← → to move',
+    rhythmHint: '← ↓ ↑ →',
+    memorizeHint: '👀 Memorize!',
+    yourTurn: '🎯 Your turn!',
+
+    // CatchGame
+    catchWon: '🎩 You caught all the meat!',
+    catchLost: '💀 The meat was lost!',
+
+    // MemoryGame
+    memoryWon: '✅ All pairs found!',
+    memoryLost: '⏱️ Time\'s up!',
+    mismatches: (n) => `❌ ${n}`,
+
+    // RhythmGame
+    hits: (n, total) => `🎵 ${n}/${total}`,
+    rhythmWon: '✅ Perfect rhythm!',
+    rhythmLost: '❌ Out of rhythm!',
+
+    // DodgeGame
+    dodgeWon: '✅ Luffy survived!',
+    dodgeLost: '💀 Luffy was struck down!',
+
+    // PuzzleGame
+    wallClue: 'Wall clues:',
+    robinNeedsHelp: '🌸 Robin: I need your help!',
+    robinFree: '🌸 Robin: Thank you! Freedom!',
+
+    // FinalGame
+    round: (r, total) => `⚓ Round ${r}/${total}`,
+    sequence: (n) => `Sequence: ${n}`,
+    errors: (n, max) => `❌ ${n}/${max}`,
+    finalWon: '👑 ONE PIECE!',
+    finalLost: '💀 Wrong!',
+
+    // Language toggle
+    langToggle: 'ES',
+  },
+}

@@ -1,3 +1,4 @@
+import { useLang } from '../i18n/useLang'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './RhythmGame.module.css'
 
@@ -21,6 +22,7 @@ function generateNotes(count) {
 }
 
 export default function RhythmGame({ difficulty, onComplete, timeLimit = null }) {
+  const { t } = useLang()
   const count = difficulty === 'easy' ? 12 : 16
   const maxMisses = difficulty === 'easy' ? 4 : 2
   const window = difficulty === 'easy' ? 200 : 120
@@ -142,8 +144,8 @@ export default function RhythmGame({ difficulty, onComplete, timeLimit = null })
         ))}
       </div>
       <div className={styles.hint}>← ↓ ↑ →</div>
-      {status === 'won' && <div className={styles.feedbackGood}>✅ ¡Ritmo perfecto!</div>}
-      {status === 'failed' && <div className={styles.feedbackBad}>❌ ¡Fuera de ritmo!</div>}
+      {status === 'won' && <div className={styles.feedbackGood}>{t.rhythmWon}</div>}
+      {status === 'failed' && <div className={styles.feedbackBad}>{t.rhythmLost}</div>}
     </div>
   )
 }

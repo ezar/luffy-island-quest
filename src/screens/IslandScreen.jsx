@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
+import { useLang } from '../i18n/useLang'
 import { islands } from '../data/islands'
 import { characters } from '../data/characters'
 import OceanBackground from '../components/OceanBackground'
@@ -16,11 +17,11 @@ const MINIGAME_MAP = {
   finale:  lazy(() => import('../minigames/FinalGame')),
 }
 
-function MinigameFallback() {
+function MinigameFallback({ label }) {
   return (
     <div className={styles.loading}>
       <span className={styles.loadingHat}>👒</span>
-      <span>Cargando…</span>
+      <span>{label}</span>
     </div>
   )
 }
@@ -33,6 +34,7 @@ export default function IslandScreen() {
   const players = useGameStore(s => s.players)
   const difficulty = useGameStore(s => s.difficulty)
   const recordResult = useGameStore(s => s.recordResult)
+  const { t } = useLang()
 
   const island = islands[currentIslandIdx]
   const player = players[currentPlayerIdx]
@@ -66,7 +68,7 @@ export default function IslandScreen() {
                 {player && char && (
                   <div className={styles.playerBadge} style={{ borderColor: char.color }}>
                     <span><CharacterIcon id={char.id} size={32} /></span>
-                    <span>¡Turno de {player.name}!</span>
+                    <span>{t.turnOf(player.name)}</span>
                   </div>
                 )}
 
@@ -84,7 +86,7 @@ export default function IslandScreen() {
                   whileHover={{ scale: 1.06, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  ⚓ ¡Empezar!
+                  {t.startMinigame}
                 </motion.button>
               </div>
             </OceanBackground>
@@ -104,7 +106,7 @@ export default function IslandScreen() {
               <span className={styles.minigameIsland}>{island.emoji} {island.name}</span>
               {player && <span className={styles.minigamePlayer}><CharacterIcon id={char?.id} size={24} /> {player.name}</span>}
             </div>
-            <Suspense fallback={<MinigameFallback />}>
+            <Suspense fallback={<MinigameFallback label={t.loading} />}>
               <Minigame
                 difficulty={difficulty}
                 onComplete={handleMinigameComplete}

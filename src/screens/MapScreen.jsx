@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
+import { useLang } from '../i18n/useLang'
 import { islands } from '../data/islands'
 import { characters } from '../data/characters'
 import OceanBackground from '../components/OceanBackground'
@@ -11,6 +12,7 @@ export default function MapScreen() {
   const currentPlayerIdx = useGameStore(s => s.currentPlayerIdx)
   const players = useGameStore(s => s.players)
   const setPhase = useGameStore(s => s.setPhase)
+  const { t } = useLang()
 
   const player = players[currentPlayerIdx]
   const char = player ? characters.find(c => c.id === player.characterId) : null
@@ -25,8 +27,8 @@ export default function MapScreen() {
   return (
     <div className={styles.screen}>
       <OceanBackground>
-        <div className={styles.mapArea} role="main" aria-label="Mapa del Gran Line">
-          <h2 className={styles.mapTitle}>☠ Gran Line ☠</h2>
+        <div className={styles.mapArea} role="main" aria-label={t.mapTitle}>
+          <h2 className={styles.mapTitle}>{t.mapTitle}</h2>
           <div className={styles.route} aria-hidden="true" />
 
           {islands.map((island, idx) => {
@@ -40,7 +42,7 @@ export default function MapScreen() {
                 whileTap={state === 'current' ? { scale: 0.92 } : {}}
                 onClick={() => state === 'current' && setPhase('island')}
                 disabled={state !== 'current'}
-                aria-label={island.name + (state === 'current' ? ' – toca para jugar' : '')}
+                aria-label={island.name}
               >
                 <span className={styles.islandEmoji}>{island.emoji}</span>
                 <span className={styles.islandLabel}>{island.name}</span>
@@ -49,7 +51,6 @@ export default function MapScreen() {
             )
           })}
 
-          {/* Animated ship */}
           <motion.div
             className={styles.ship}
             animate={{ left: `${currentIsland.x}%`, top: `${currentIsland.y}%` }}
@@ -60,7 +61,6 @@ export default function MapScreen() {
             🚢
           </motion.div>
 
-          {/* Turn banner */}
           {player && (
             <motion.div
               className={styles.banner}
@@ -69,12 +69,12 @@ export default function MapScreen() {
               transition={{ delay: 0.4 }}
             >
               <span><CharacterIcon id={char?.id} size={28} /></span>
-              <span>¡Turno de {player.name}!</span>
+              <span>{t.turnOf(player.name)}</span>
               <span className={styles.bannerBerries}>🍖 {player.berries}</span>
             </motion.div>
           )}
 
-          <p className={styles.hint}>Toca tu isla para comenzar</p>
+          <p className={styles.hint}>{t.tapToPlay}</p>
         </div>
       </OceanBackground>
     </div>

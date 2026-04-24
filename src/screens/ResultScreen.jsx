@@ -5,6 +5,7 @@ import { characters } from '../data/characters'
 import StarRating from '../components/StarRating'
 import OceanBackground from '../components/OceanBackground'
 import CharacterIcon from '../components/CharacterIcon'
+import { useLang } from '../i18n/useLang'
 import styles from './ResultScreen.module.css'
 
 export default function ResultScreen() {
@@ -13,6 +14,7 @@ export default function ResultScreen() {
   const players = useGameStore(s => s.players)
   const islandResults = useGameStore(s => s.islandResults)
   const advanceTurn = useGameStore(s => s.advanceTurn)
+  const { t } = useLang()
 
   const island = islands[currentIslandIdx]
   const player = players[currentPlayerIdx]
@@ -87,7 +89,7 @@ export default function ResultScreen() {
             animate={{ opacity: 1 }}
             transition={{ delay: 2.8 }}
           >
-            {isLastIsland && allPlayersOnIsland ? '👑 Ver Ranking Final' : '🚢 Continuar'}
+            {isLastIsland && allPlayersOnIsland ? t.finalRankingBtn : t.continueBtn}
           </motion.button>
         </motion.div>
       </OceanBackground>

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
+import { useLang } from '../i18n/useLang'
 import { characters } from '../data/characters'
-import StarRating from '../components/StarRating'
 import OceanBackground from '../components/OceanBackground'
 import CharacterIcon from '../components/CharacterIcon'
 import styles from './EndScreen.module.css'
@@ -9,6 +9,7 @@ import styles from './EndScreen.module.css'
 export default function EndScreen() {
   const players = useGameStore(s => s.players)
   const resetGame = useGameStore(s => s.resetGame)
+  const { t } = useLang()
 
   const sorted = [...players].sort((a, b) =>
     b.berries !== a.berries ? b.berries - a.berries : b.stars - a.stars
@@ -28,7 +29,7 @@ export default function EndScreen() {
           >
             <div className={styles.crown}>👑</div>
             <h1 className={styles.title}>ONE PIECE</h1>
-            <div className={styles.subtitle}>¡La aventura ha terminado!</div>
+            <div className={styles.subtitle}>{t.adventureOver}</div>
           </motion.div>
 
           <motion.div
@@ -37,11 +38,7 @@ export default function EndScreen() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <p>
-              ¡La tripulación del Thousand Sunny ha llegado a Raftel!
-              El legendario tesoro existe de verdad. Las palabras del gran pirata Gol D. Roger
-              resuenan en el aire: <em>"¡Lo dejé todo allí! ¡Búscalo!"</em>
-            </p>
+            <p>{t.endStory} <em>{t.endQuote}</em></p>
           </motion.div>
 
           <motion.div
@@ -50,10 +47,9 @@ export default function EndScreen() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9 }}
           >
-            <h2 className={styles.rankingTitle}>⚓ Clasificación Final</h2>
+            <h2 className={styles.rankingTitle}>{t.finalRanking}</h2>
             {sorted.map((player, idx) => {
               const char = characters.find(c => c.id === player.characterId)
-              const totalStars = Math.min(3, Math.round(player.stars / 6))
               return (
                 <motion.div
                   key={player.id}
@@ -86,7 +82,7 @@ export default function EndScreen() {
               transition={{ delay: 1.8, type: 'spring', stiffness: 120 }}
             >
               <span className={styles.winnerCrown}>👑</span>
-              <span>¡{sorted[0].name} es el Rey Pirata!</span>
+              <span>{t.pirateKing(sorted[0].name)}</span>
             </motion.div>
           )}
 
@@ -99,7 +95,7 @@ export default function EndScreen() {
             animate={{ opacity: 1 }}
             transition={{ delay: 2.2 }}
           >
-            🏴‍☠️ Nueva Aventura
+            {t.newAdventure}
           </motion.button>
         </div>
       </OceanBackground>

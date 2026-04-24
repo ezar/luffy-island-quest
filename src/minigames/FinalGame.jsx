@@ -1,9 +1,11 @@
+import { useLang } from '../i18n/useLang'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './FinalGame.module.css'
 
 const SYMBOLS = ['👑','⚓','🏴‍☠️','⚔️','🗺️','🔱','💎','🌊']
 
 export default function FinalGame({ difficulty, onComplete, timeLimit = null }) {
+  const { t } = useLang()
   const totalRounds = difficulty === 'easy' ? 5 : 6
   const startLen = difficulty === 'easy' ? 3 : 4
   const maxErrors = difficulty === 'easy' ? 2 : 1
@@ -109,17 +111,17 @@ export default function FinalGame({ difficulty, onComplete, timeLimit = null }) 
   return (
     <div className={styles.wrapper}>
       <div className={styles.hud}>
-        <div className={styles.roundInfo}>⚓ Ronda {round}/{totalRounds}</div>
-        <div className={styles.seqLen}>Secuencia: {sequence.length}</div>
-        <div className={styles.errInfo}>❌ {errors}/{maxErrors}</div>
+        <div className={styles.roundInfo}>{t.round(round, totalRounds)}</div>
+        <div className={styles.seqLen}>{t.sequence(sequence.length)}</div>
+        <div className={styles.errInfo}>{t.errors(errors, maxErrors)}</div>
       </div>
 
       <div className={styles.status}>
-        {phase === 'showing' && <span className={styles.statusShowing}>👀 ¡Memoriza!</span>}
-        {phase === 'input' && <span className={styles.statusInput}>🎯 ¡Tu turno!</span>}
+        {phase === 'showing' && <span className={styles.statusShowing}>{t.memorizeHint}</span>}
+        {phase === 'input' && <span className={styles.statusInput}>{t.yourTurn}</span>}
         {phase === 'correct' && <span className={styles.statusCorrect}>✅ ¡Correcto!</span>}
-        {phase === 'done' && errors > maxErrors && <span className={styles.statusBad}>💀 ¡Error!</span>}
-        {phase === 'done' && errors <= maxErrors && <span className={styles.statusCorrect}>👑 ¡ONE PIECE!</span>}
+        {phase === 'done' && errors > maxErrors && <span className={styles.statusBad}>{t.finalLost}</span>}
+        {phase === 'done' && errors <= maxErrors && <span className={styles.statusCorrect}>{t.finalWon}</span>}
       </div>
 
       {/* Sequence preview during showing phase */}

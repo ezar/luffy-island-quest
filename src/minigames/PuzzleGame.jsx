@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useLang } from '../i18n/useLang'
 import styles from './PuzzleGame.module.css'
 
 const SYMBOLS = ['⚓','🏴‍☠️','⚔️','🌸']
@@ -98,18 +99,19 @@ export default function PuzzleGame({ difficulty, onComplete, timeLimit = null })
     }
   }
 
+  const { t } = useLang()
   const pct = (timeLeft / totalTime) * 100
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.hud}>
         <div className={styles.timerBar} style={{ '--pct': `${pct}%` }}>⏱️ {timeLeft}s</div>
-        <div className={styles.attempts}>💪 Intentos: {attemptsLeft}</div>
+        <div className={styles.attempts}>{t.attempts(attemptsLeft)}</div>
       </div>
 
       <div className={styles.scene}>
         <div className={styles.wall}>
-          <div className={styles.wallLabel}>Pistas del muro:</div>
+          <div className={styles.wallLabel}>{t.wallClue}</div>
           <div className={styles.wallClue}>
             {wallClue.map((sym, i) => (
               <span key={i} className={styles.clueSym}>{sym}</span>
@@ -119,8 +121,8 @@ export default function PuzzleGame({ difficulty, onComplete, timeLimit = null })
 
         <div className={`${styles.robin} ${status === 'solved' ? styles.robinFree : ''}`}>
           {status === 'solved'
-            ? '🌸 Robin: ¡Gracias! ¡Libertad!'
-            : '🌸 Robin: ¡Necesito tu ayuda!'}
+            ? t.robinFree
+            : t.robinNeedsHelp}
         </div>
 
         <div className={styles.seqDisplay}>
@@ -165,13 +167,13 @@ export default function PuzzleGame({ difficulty, onComplete, timeLimit = null })
         </div>
 
         {status === 'wrong' && (
-          <div className={styles.feedbackWrong}>❌ ¡Orden incorrecto! Inténtalo de nuevo.</div>
+          <div className={styles.feedbackWrong}>{t.wrongOrder}</div>
         )}
         {status === 'solved' && (
-          <div className={styles.feedbackCorrect}>✅ ¡CORRECTO! ¡ROBIN LIBRE!</div>
+          <div className={styles.feedbackCorrect}>{t.correct}</div>
         )}
         {status === 'timeout' && (
-          <div className={styles.feedbackWrong}>⏱️ ¡Tiempo agotado!</div>
+          <div className={styles.feedbackWrong}>{t.timeout}</div>
         )}
       </div>
     </div>

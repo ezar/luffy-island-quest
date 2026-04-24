@@ -253,27 +253,14 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
   );
 
   // Touch handlers
-  const handleTouchStart = useCallback((e) => {
-    if (e.touches.length > 0) {
-      touchStartX.current = e.touches[0].clientX;
-    }
-  }, []);
-
-  const handleTouchMove = useCallback(
-    (e) => {
-      if (status !== 'playing') return;
-      if (e.touches.length > 0 && touchStartX.current !== null) {
-        const wrapper = wrapperRef.current;
-        if (!wrapper) return;
-        const rect = wrapper.getBoundingClientRect();
-        const touchX = e.touches[0].clientX;
-        // Map raw touch X to percentage within wrapper
-        const pct = ((touchX - rect.left) / rect.width) * 100;
-        updateHatX(pct - 5); // center hat on finger
-      }
-    },
-    [status, updateHatX]
-  );
+  const handlePointerMove = useCallback((e) => {
+    if (status !== 'playing') return;
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const rect = wrapper.getBoundingClientRect();
+    const pct = ((e.clientX - rect.left) / rect.width) * 100;
+    updateHatX(pct);
+  }, [status, updateHatX]);
 
   const starsDisplay = '★'.repeat(stars) + '☆'.repeat(3 - stars);
 
@@ -283,8 +270,8 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
       ref={wrapperRef}
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
+      onPointerMove={handlePointerMove}
+      style={{ touchAction: 'none' }}
     >
       {/* HUD */}
       <div className={styles.hud}>

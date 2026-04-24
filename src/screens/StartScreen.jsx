@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
+import { useLang } from '../i18n/useLang'
 import { characters } from '../data/characters'
 import OceanBackground from '../components/OceanBackground'
 import CharacterIcon from '../components/CharacterIcon'
@@ -8,6 +9,7 @@ import styles from './StartScreen.module.css'
 
 export default function StartScreen() {
   const startGame = useGameStore(s => s.startGame)
+  const { t, lang } = useLang()
   const [numPlayers, setNumPlayers] = useState(1)
   const [assignments, setAssignments] = useState({})
   const [difficulty, setDifficulty] = useState('easy')
@@ -35,7 +37,7 @@ export default function StartScreen() {
 
   const handleStart = () => {
     const players = Array.from({ length: numPlayers }, (_, i) => ({
-      name: `Jugador ${i + 1}`,
+      name: lang === 'es' ? `Jugador ${i + 1}` : `Player ${i + 1}`,
       characterId: assignments[i],
     }))
     startGame(players, difficulty)
@@ -53,7 +55,7 @@ export default function StartScreen() {
           >
             <div className={styles.logoDecor}>☠️ ⚓ ☠️</div>
             <h1 className={styles.title}>ONE PIECE</h1>
-            <div className={styles.subtitle}>La Gran Aventura del Sombrero de Paja</div>
+            <div className={styles.subtitle}>{t.subtitle}</div>
           </motion.div>
 
           <motion.div
@@ -64,19 +66,19 @@ export default function StartScreen() {
           >
             {/* Difficulty */}
             <div className={styles.row}>
-              <span className={styles.label}>Dificultad:</span>
+              <span className={styles.label}>{t.difficulty}</span>
               <button
                 className={`${styles.diffBtn} ${difficulty === 'easy' ? styles.diffActive : ''}`}
                 onClick={() => setDifficulty('easy')}
-              >⭐ Fácil</button>
+              >{t.easy}</button>
               <button
                 className={`${styles.diffBtn} ${styles.diffHard} ${difficulty === 'hard' ? styles.diffActive : ''}`}
                 onClick={() => setDifficulty('hard')}
-              >💀 Difícil</button>
+              >{t.hard}</button>
             </div>
 
             {/* Player count */}
-            <div className={styles.label}>Jugadores:</div>
+            <div className={styles.label}>{t.players}</div>
             <div className={styles.countRow}>
               {[1, 2, 3, 4].map(n => (
                 <button
@@ -101,7 +103,7 @@ export default function StartScreen() {
                     <span className={styles.panelEmoji}>
                       {ch ? <CharacterIcon id={ch.id} size={36} /> : '❓'}
                     </span>
-                    <span className={styles.panelNum}>J{i + 1}</span>
+                    <span className={styles.panelNum}>{lang === 'es' ? 'J' : 'P'}{i + 1}</span>
                     <span className={styles.panelChar}>{ch ? ch.name.split(' ')[0] : '—'}</span>
                   </div>
                 )
@@ -111,8 +113,8 @@ export default function StartScreen() {
             {/* Character grid */}
             <div className={styles.label}>
               {selectingFor >= 0 && !allReady
-                ? `Jugador ${selectingFor + 1}: elige tripulante`
-                : 'Tripulación lista ✓'}
+                ? t.chooseCrewmate(selectingFor + 1)
+                : t.crewReady}
             </div>
             <div className={styles.charGrid}>
               {characters.map(ch => {
@@ -146,7 +148,7 @@ export default function StartScreen() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            🚢 ¡ZARPAR!
+            {t.sail}
           </motion.button>
         </div>
       </OceanBackground>

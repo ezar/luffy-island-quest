@@ -1,8 +1,10 @@
+import { useLang } from '../i18n/useLang'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './DodgeGame.module.css'
 import LuffyHatSvg from '../components/LuffyHatSvg'
 
 export default function DodgeGame({ difficulty, onComplete, timeLimit = null }) {
+  const { t } = useLang()
   const maxLives = difficulty === 'easy' ? 3 : 2
   const defaultTime = difficulty === 'easy' ? 40 : 35
   const totalTime = timeLimit != null ? timeLimit : defaultTime
@@ -119,9 +121,9 @@ export default function DodgeGame({ difficulty, onComplete, timeLimit = null }) 
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
-  const handleTouchMove = (e) => {
+  const handlePointerMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect()
-    const x = ((e.touches[0].clientX - rect.left) / rect.width) * 100
+    const x = ((e.clientX - rect.left) / rect.width) * 100
     luffyXRef.current = Math.max(5, Math.min(95, x))
     setLuffyX(luffyXRef.current)
   }
@@ -131,7 +133,8 @@ export default function DodgeGame({ difficulty, onComplete, timeLimit = null }) 
   return (
     <div
       className={`${styles.wrapper} ${hitFlash ? styles.hitFlash : ''}`}
-      onTouchMove={handleTouchMove}
+      onPointerMove={handlePointerMove}
+      style={{ touchAction: 'none' }}
     >
       <div className={styles.hud}>
         <div className={styles.timerBar} style={{ '--pct': `${pct}%` }}>⏱️ {timeLeft}s</div>
@@ -146,9 +149,9 @@ export default function DodgeGame({ difficulty, onComplete, timeLimit = null }) 
           <LuffyHatSvg size={72} />
         </div>
       </div>
-      <div className={styles.hint}>← → para moverse</div>
-      {status === 'won' && <div className={styles.feedbackGood}>✅ ¡Luffy sobrevivió!</div>}
-      {status === 'failed' && <div className={styles.feedbackBad}>💀 ¡Luffy fue fulminado!</div>}
+      <div className={styles.hint}>{t.moveHint}</div>
+      {status === 'won' && <div className={styles.feedbackGood}>{t.dodgeWon}</div>}
+      {status === 'failed' && <div className={styles.feedbackBad}>{t.dodgeLost}</div>}
     </div>
   )
 }

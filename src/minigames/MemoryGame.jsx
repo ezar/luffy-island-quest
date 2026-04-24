@@ -1,3 +1,4 @@
+import { useLang } from '../i18n/useLang'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './MemoryGame.module.css'
 
@@ -15,6 +16,7 @@ function makeCards(numPairs) {
 }
 
 export default function MemoryGame({ difficulty, onComplete, timeLimit = null }) {
+  const { t } = useLang()
   const numPairs = difficulty === 'easy' ? 4 : 6
   const defaultTime = difficulty === 'easy' ? 60 : 45
   const totalTime = timeLimit != null ? timeLimit : defaultTime
@@ -121,8 +123,8 @@ export default function MemoryGame({ difficulty, onComplete, timeLimit = null })
           </button>
         ))}
       </div>
-      {status === 'won' && <div className={styles.feedbackGood}>✅ ¡Todos los pares encontrados!</div>}
-      {status === 'timeout' && <div className={styles.feedbackBad}>⏱️ ¡Tiempo agotado!</div>}
+      {status === 'won' && <div className={styles.feedbackGood}>{t.memoryWon}</div>}
+      {status === 'timeout' && <div className={styles.feedbackBad}>{t.memoryLost}</div>}
     </div>
   )
 }

@@ -1,0 +1,22 @@
+.langBtn {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 500;
+  font-family: var(--font-title);
+  font-size: 1rem;
+  padding: 5px 14px;
+  background: rgba(10, 34, 64, 0.85);
+  color: var(--op-gold);
+  border: 2px solid var(--op-gold);
+  border-radius: 20px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s, transform 0.1s;
+}
+.langBtn:hover {
+  background: var(--op-gold);
+  color: var(--op-ink);
+  transform: scale(1.05);
+}

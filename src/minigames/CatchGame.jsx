@@ -29,8 +29,6 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
   const target = cfg.target;
   const totalTime = timeLimit ?? cfg.defaultTime;
 
-  // Hat position as percent (0–100), adjusted so hat stays within bounds
-  const [hatX, setHatX] = useState(50);
   const [meats, setMeats] = useState([]);
   const [caught, setCaught] = useState(0);
   const [missed, setMissed] = useState(0);
@@ -41,6 +39,7 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
   const [stars, setStars] = useState(0);
 
   const wrapperRef = useRef(null);
+  const hatDivRef = useRef(null);   // direct DOM ref — no React re-render on move
   const meatsRef = useRef([]);
   const hatXRef = useRef(50);
   const caughtRef = useRef(0);
@@ -50,14 +49,13 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
   const lastFrameTime = useRef(null);
   const spawnTimerRef = useRef(null);
   const countdownRef = useRef(null);
-  const touchStartX = useRef(null);
   const gameAreaRef = useRef(null);
 
-  // Sync hatX state → ref
+  // Update hat position directly in DOM — zero React re-renders
   const updateHatX = useCallback((val) => {
-    const clamped = Math.min(Math.max(val, 3), 93); // keep hat mostly on screen
+    const clamped = Math.min(Math.max(val, 3), 93);
     hatXRef.current = clamped;
-    setHatX(clamped);
+    if (hatDivRef.current) hatDivRef.current.style.left = clamped + '%';
   }, []);
 
   const computeStars = useCallback((misses, timeleft) => {
@@ -237,10 +235,9 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
     timeLeftRef.current = timeLeft;
   }, [timeLeft]);
 
-  // Keyboard handler
   const handleKeyDown = useCallback(
     (e) => {
-      if (status !== 'playing') return;
+      if (statusRef.current !== 'playing') return;
       if (e.key === 'ArrowLeft') {
         e.preventDefault();
         updateHatX(hatXRef.current - 8);
@@ -249,18 +246,17 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
         updateHatX(hatXRef.current + 8);
       }
     },
-    [status, updateHatX]
+    [updateHatX]
   );
 
-  // Touch handlers
   const handlePointerMove = useCallback((e) => {
-    if (status !== 'playing') return;
+    if (statusRef.current !== 'playing') return;
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
     const rect = wrapper.getBoundingClientRect();
     const pct = ((e.clientX - rect.left) / rect.width) * 100;
     updateHatX(pct);
-  }, [status, updateHatX]);
+  }, [updateHatX]);
 
   const starsDisplay = '★'.repeat(stars) + '☆'.repeat(3 - stars);
 
@@ -291,7 +287,7 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
             🍖
           </div>
         ))}
-        <div className={styles.hat} style={{ left: hatX + '%' }}>
+        <div className={styles.hat} ref={hatDivRef} style={{ left: '50%' }}>
           <LuffyHatSvg size={88} />
         </div>
       </div>

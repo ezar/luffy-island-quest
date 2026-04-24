@@ -25,7 +25,7 @@ export default function RhythmGame({ difficulty, onComplete, timeLimit = null })
   const { t } = useLang()
   const count = difficulty === 'easy' ? 12 : 16
   const maxMisses = difficulty === 'easy' ? 4 : 2
-  const window = difficulty === 'easy' ? 200 : 120
+  const hitWindow = difficulty === 'easy' ? 200 : 120
 
   const [notes] = useState(() => generateNotes(count))
   const [hits, setHits] = useState(0)
@@ -58,10 +58,10 @@ export default function RhythmGame({ difficulty, onComplete, timeLimit = null })
     const tick = () => {
       const now = Date.now() - startRef.current
       setElapsed(now)
-      // Auto-miss notes that passed target + window
+      // Auto-miss notes that passed target + hitWindow
       notes.forEach(n => {
         if (goneRef.current.has(n.id)) return
-        if (now > n.time + window) {
+        if (now > n.time + hitWindow) {
           goneRef.current.add(n.id)
           setGone(new Set(goneRef.current))
           missesRef.current++
@@ -85,7 +85,7 @@ export default function RhythmGame({ difficulty, onComplete, timeLimit = null })
     }
     rafRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(rafRef.current)
-  }, [status, notes, window, maxMisses, endGame])
+  }, [status, notes, hitWindow, maxMisses, endGame])
 
   // Keydown
   useEffect(() => {
@@ -101,7 +101,7 @@ export default function RhythmGame({ difficulty, onComplete, timeLimit = null })
         if (goneRef.current.has(n.id)) return
         if (n.lane !== laneIdx) return
         const diff = Math.abs(n.time - now)
-        if (diff <= window) {
+        if (diff <= hitWindow) {
           if (!best || diff < Math.abs(best.time - now)) best = n
         }
       })
@@ -114,9 +114,9 @@ export default function RhythmGame({ difficulty, onComplete, timeLimit = null })
         setTimeout(() => setLaneFlash(f => { const nf = {...f}; delete nf[laneIdx]; return nf }), 200)
       }
     }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [status, notes, window])
+    globalThis.addEventListener('keydown', onKey)
+    return () => globalThis.removeEventListener('keydown', onKey)
+  }, [status, notes, hitWindow])
 
   // Note visual position: 0% at top, 100% at target zone (85% from top)
   const totalScroll = 3000 // ms to travel full lane height

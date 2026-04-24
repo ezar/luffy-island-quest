@@ -34,7 +34,8 @@ export default function IslandScreen() {
   const players = useGameStore(s => s.players)
   const difficulty = useGameStore(s => s.difficulty)
   const recordResult = useGameStore(s => s.recordResult)
-  const { t } = useLang()
+  const { t, lang } = useLang()
+  const txt = (field) => (typeof field === 'object' ? field[lang] ?? field.es : field)
 
   const island = islands[currentIslandIdx]
   const player = players[currentPlayerIdx]
@@ -73,7 +74,7 @@ export default function IslandScreen() {
                 )}
 
                 <div className={styles.storyBox}>
-                  <p className={styles.storyText}>{island.story}</p>
+                  <p className={styles.storyText}>{txt(island.story)}</p>
                 </div>
 
                 <div className={styles.illustration} aria-hidden="true">

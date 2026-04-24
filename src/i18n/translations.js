@@ -47,8 +47,12 @@ export const translations = {
     yourTurn: '🎯 ¡Tu turno!',
 
     // CatchGame
-    catchWon: '🎩 ¡Atrapaste toda la carne!',
-    catchLost: '💀 ¡La carne se perdió!',
+    catchWonTitle: '¡Gomu Gomu!',
+    catchLostTitle: '¡Oh no!',
+    catchCaughtMsg: (n) => `¡Atrapaste ${n} piezas de carne!`,
+    catchPerfect: '¡Perfecto!',
+    catchTooMuch: '¡Demasiada comida cayó!',
+    catchTimeout: '¡Se acabó el tiempo!',
 
     // MemoryGame
     memoryWon: '✅ ¡Todos los pares encontrados!',
@@ -128,8 +132,12 @@ export const translations = {
     yourTurn: '🎯 Your turn!',
 
     // CatchGame
-    catchWon: '🎩 You caught all the meat!',
-    catchLost: '💀 The meat was lost!',
+    catchWonTitle: 'Gomu Gomu!',
+    catchLostTitle: 'Oh no!',
+    catchCaughtMsg: (n) => `Caught ${n} meat!`,
+    catchPerfect: 'Perfect!',
+    catchTooMuch: 'Too much food dropped!',
+    catchTimeout: "Time's up!",
 
     // MemoryGame
     memoryWon: '✅ All pairs found!',

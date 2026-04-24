@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import styles from './CatchGame.module.css';
 import LuffyHatSvg from '../components/LuffyHatSvg';
+import { useLang } from '../i18n/useLang';
 
 const DIFFICULTY_CONFIG = {
   easy: {
@@ -24,6 +25,7 @@ const DIFFICULTY_CONFIG = {
 let nextId = 0;
 
 export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit = null }) {
+  const { t } = useLang();
   const cfg = DIFFICULTY_CONFIG[difficulty] || DIFFICULTY_CONFIG.easy;
   const maxMisses = cfg.maxMisses;
   const target = cfg.target;
@@ -298,19 +300,19 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
           <div className={styles.overlayCard}>
             {status === 'won' ? (
               <>
-                <div className={styles.overlayTitle}>Gomu Gomu!</div>
+                <div className={styles.overlayTitle}>{t.catchWonTitle}</div>
                 <div className={styles.overlayEmoji}>🏴‍☠️</div>
                 <div className={styles.overlayStars}>{starsDisplay}</div>
                 <div className={styles.overlayMessage}>
-                  Caught {caught} meat! {stars === 3 ? 'Perfect!' : ''}
+                  {t.catchCaughtMsg(caught)} {stars === 3 ? t.catchPerfect : ''}
                 </div>
               </>
             ) : (
               <>
-                <div className={styles.overlayTitle}>Oh no!</div>
+                <div className={styles.overlayTitle}>{t.catchLostTitle}</div>
                 <div className={styles.overlayEmoji}>💀</div>
                 <div className={styles.overlayMessage}>
-                  {missed > maxMisses ? 'Too much food dropped!' : "Time's up!"}
+                  {missed > maxMisses ? t.catchTooMuch : t.catchTimeout}
                 </div>
               </>
             )}

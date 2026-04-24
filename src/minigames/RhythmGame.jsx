@@ -37,11 +37,35 @@ export default function RhythmGame({ difficulty, onComplete, timeLimit = null })
   const startRef = useRef(Date.now())
   const rafRef = useRef()
   const doneRef = useRef(false)
+  const statusRef = useRef('playing')
   const cbRef = useRef(onComplete)
   useEffect(() => { cbRef.current = onComplete })
+  useEffect(() => { statusRef.current = status }, [status])
   const missesRef = useRef(0)
   const hitsRef = useRef(0)
   const goneRef = useRef(new Set())
+
+  const handleLaneInput = useCallback((laneIdx) => {
+    if (statusRef.current !== 'playing') return
+    const now = Date.now() - startRef.current
+    let best = null
+    notes.forEach(n => {
+      if (goneRef.current.has(n.id)) return
+      if (n.lane !== laneIdx) return
+      const diff = Math.abs(n.time - now)
+      if (diff <= hitWindow) {
+        if (!best || diff < Math.abs(best.time - now)) best = n
+      }
+    })
+    if (best) {
+      goneRef.current.add(best.id)
+      setGone(new Set(goneRef.current))
+      hitsRef.current++
+      setHits(hitsRef.current)
+      setLaneFlash(f => ({ ...f, [laneIdx]: 'hit' }))
+      setTimeout(() => setLaneFlash(f => { const nf = {...f}; delete nf[laneIdx]; return nf }), 200)
+    }
+  }, [notes, hitWindow])
 
   const endGame = useCallback((h, m) => {
     if (doneRef.current) return
@@ -90,33 +114,14 @@ export default function RhythmGame({ difficulty, onComplete, timeLimit = null })
   // Keydown
   useEffect(() => {
     const onKey = (e) => {
-      if (status !== 'playing') return
       const laneIdx = LANES.findIndex(l => l.key === e.key)
       if (laneIdx === -1) return
       e.preventDefault()
-      const now = Date.now() - startRef.current
-      // Find the best note to hit in this lane
-      let best = null
-      notes.forEach(n => {
-        if (goneRef.current.has(n.id)) return
-        if (n.lane !== laneIdx) return
-        const diff = Math.abs(n.time - now)
-        if (diff <= hitWindow) {
-          if (!best || diff < Math.abs(best.time - now)) best = n
-        }
-      })
-      if (best) {
-        goneRef.current.add(best.id)
-        setGone(new Set(goneRef.current))
-        hitsRef.current++
-        setHits(hitsRef.current)
-        setLaneFlash(f => ({ ...f, [laneIdx]: 'hit' }))
-        setTimeout(() => setLaneFlash(f => { const nf = {...f}; delete nf[laneIdx]; return nf }), 200)
-      }
+      handleLaneInput(laneIdx)
     }
     globalThis.addEventListener('keydown', onKey)
     return () => globalThis.removeEventListener('keydown', onKey)
-  }, [status, notes, hitWindow])
+  }, [handleLaneInput])
 
   // Note visual position: 0% at top, 100% at target zone (85% from top)
   const totalScroll = 3000 // ms to travel full lane height
@@ -143,7 +148,18 @@ export default function RhythmGame({ difficulty, onComplete, timeLimit = null })
           </div>
         ))}
       </div>
-      <div className={styles.hint}>← ↓ ↑ →</div>
+      <div className={styles.tapButtons}>
+        {LANES.map((lane, li) => (
+          <button
+            key={li}
+            className={styles.tapBtn}
+            style={{ '--lane-color': lane.color }}
+            onPointerDown={(e) => { e.preventDefault(); handleLaneInput(li) }}
+          >
+            {lane.label}
+          </button>
+        ))}
+      </div>
       {status === 'won' && <div className={styles.feedbackGood}>{t.rhythmWon}</div>}
       {status === 'failed' && <div className={styles.feedbackBad}>{t.rhythmLost}</div>}
     </div>

@@ -23,6 +23,7 @@ export default function DodgeGame({ difficulty, onComplete, timeLimit = null }) 
   const cbRef = useRef(onComplete)
   useEffect(() => { cbRef.current = onComplete })
   const luffyXRef = useRef(50)
+  const luffyDivRef = useRef(null)
   const statusRef = useRef('playing')
   const boltIdRef = useRef(0)
   const rafRef = useRef()
@@ -110,23 +111,27 @@ export default function DodgeGame({ difficulty, onComplete, timeLimit = null }) 
     const onKey = (e) => {
       if (statusRef.current !== 'playing') return
       if (e.key === 'ArrowLeft') {
-        luffyXRef.current = Math.max(5, luffyXRef.current - 6)
-        setLuffyX(luffyXRef.current)
+        updateLuffyX(luffyXRef.current - 6)
       } else if (e.key === 'ArrowRight') {
-        luffyXRef.current = Math.min(95, luffyXRef.current + 6)
-        setLuffyX(luffyXRef.current)
+        updateLuffyX(luffyXRef.current + 6)
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
+  }, [updateLuffyX])
+
+  const updateLuffyX = useCallback((val) => {
+    const clamped = Math.max(5, Math.min(95, val))
+    luffyXRef.current = clamped
+    if (luffyDivRef.current) luffyDivRef.current.style.left = clamped + '%'
   }, [])
 
-  const handlePointerMove = (e) => {
+  const handlePointerMove = useCallback((e) => {
+    if (statusRef.current !== 'playing') return
     const rect = e.currentTarget.getBoundingClientRect()
     const x = ((e.clientX - rect.left) / rect.width) * 100
-    luffyXRef.current = Math.max(5, Math.min(95, x))
-    setLuffyX(luffyXRef.current)
-  }
+    updateLuffyX(x)
+  }, [updateLuffyX])
 
   const pct = (timeLeft / totalTime) * 100
 
@@ -145,7 +150,7 @@ export default function DodgeGame({ difficulty, onComplete, timeLimit = null }) 
         {bolts.map(b => (
           <div key={b.id} className={styles.bolt} style={{ left: `${b.x}%`, top: `${b.y}%` }}>⚡</div>
         ))}
-        <div className={`${styles.luffy} ${hitFlash ? styles.luffyHit : ''}`} style={{ left: `${luffyX}%` }}>
+        <div className={`${styles.luffy} ${hitFlash ? styles.luffyHit : ''}`} ref={luffyDivRef} style={{ left: '50%' }}>
           <LuffyHatSvg size={72} />
         </div>
       </div>

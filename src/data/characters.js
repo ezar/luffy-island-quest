@@ -1,0 +1,48 @@
+/** @type {Array<{id:string,name:string,color:string,accentColor:string,emoji:string,catchphrase:string,description:string}>} */
+export const characters = [
+  {
+    id: 'luffy',
+    name: 'Monkey D. Luffy',
+    color: '#FF5722',
+    accentColor: '#FFD600',
+    emoji: '🎩',
+    catchphrase: '¡Voy a ser el Rey de los Piratas!',
+    description: 'Capitán. Come carne. Estira el cuerpo.',
+  },
+  {
+    id: 'zoro',
+    name: 'Roronoa Zoro',
+    color: '#2E7D32',
+    accentColor: '#A5D6A7',
+    emoji: '⚔️',
+    catchphrase: '¡Nada me impide llegar a la cima!',
+    description: 'El mejor espadachín. Se pierde siempre.',
+  },
+  {
+    id: 'nami',
+    name: 'Nami',
+    color: '#FF9800',
+    accentColor: '#FFE082',
+    emoji: '🗺️',
+    catchphrase: '¡Las Berries son mi vida!',
+    description: 'Navegante. Ama el dinero y los mapas.',
+  },
+  {
+    id: 'usopp',
+    name: 'Usopp',
+    color: '#795548',
+    accentColor: '#BCAAA4',
+    emoji: '🎯',
+    catchphrase: '¡Soy el valiente guerrero del mar!',
+    description: 'Francotirador. Cuenta historias increíbles.',
+  },
+  {
+    id: 'sanji',
+    name: 'Sanji',
+    color: '#3F51B5',
+    accentColor: '#9FA8DA',
+    emoji: '🍽️',
+    catchphrase: '¡Un caballero nunca abandona a una dama!',
+    description: 'Cocinero. Patea con elegancia.',
+  },
+]

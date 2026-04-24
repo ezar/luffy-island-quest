@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.star {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  transition: opacity 0.2s;
+  display: inline-block;
+}
+
+.empty {
+  opacity: 0.18;
+  filter: grayscale(1);
+}
+
+.earned {
+  opacity: 1;
+  filter: none;
+  animation: starPop 0.5s ease forwards;
+}

@@ -1,0 +1,176 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+  padding: 12px;
+  gap: 12px;
+  overflow-y: auto;
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+}
+.hud {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  justify-content: space-between;
+  font-family: 'Bangers', cursive;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: #FFD600;
+}
+.timerBar {
+  position: relative;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 5px 16px;
+  overflow: hidden;
+}
+.timerBar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: var(--pct, 100%);
+  background: #FFD600;
+  opacity: 0.25;
+  transition: width 1s linear;
+}
+.attempts { font-size: 1.1rem; }
+.scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 560px;
+}
+.wall {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 12px 20px;
+  text-align: center;
+}
+.wallLabel {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+.wallClue { display: flex; gap: 12px; justify-content: center; }
+.clueSym { font-size: clamp(1.8rem, 4vw, 2.5rem); }
+.robin {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: #FFB6C1;
+  font-style: italic;
+  transition: color 0.5s;
+}
+.robinFree { color: #A5D6A7; animation: bounceIn 0.6s ease; }
+.seqDisplay {
+  display: flex;
+  gap: 12px;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-family: 'Bangers', cursive;
+  letter-spacing: 4px;
+}
+.seqSlot {
+  min-width: 48px;
+  text-align: center;
+  border-bottom: 3px solid rgba(255,214,0,0.5);
+}
+.levers {
+  display: flex;
+  gap: clamp(16px, 4vw, 40px);
+  justify-content: center;
+  align-items: flex-end;
+  padding: 10px 0;
+}
+.lever {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: transform 0.2s;
+  position: relative;
+  padding: 0;
+}
+.lever:hover:not(:disabled) { transform: translateY(-6px); }
+.leverSym { font-size: clamp(1.6rem, 4vw, 2.4rem); }
+.leverHandle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.leverStick {
+  width: 8px;
+  height: 60px;
+  background: #666;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.leverBall {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #888;
+  border: 2px solid #555;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.leverActive .leverBall {
+  background: #FFD600;
+  box-shadow: 0 0 14px #FFD600;
+}
+.leverActive .leverStick { background: #FFD600; }
+.leverWrong .leverBall { background: #D32F2F; box-shadow: 0 0 10px #D32F2F; animation: shakeLR 0.4s ease; }
+.leverCorrect .leverBall { background: #4CAF50; box-shadow: 0 0 14px #4CAF50; }
+.hintNum {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  background: #FFD600;
+  color: #1a1a1a;
+  font-family: 'Bangers', cursive;
+  font-size: 1rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #1a1a1a;
+}
+.feedbackWrong {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: #EF5350;
+  letter-spacing: 1px;
+  animation: shakeLR 0.4s ease;
+}
+.feedbackCorrect {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: #4CAF50;
+  letter-spacing: 2px;
+  animation: bounceIn 0.5s ease;
+}
+
+@keyframes shakeLR {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.7); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}

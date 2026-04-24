@@ -1,0 +1,46 @@
+/* ===== LUFFY ISLAND QUEST — CSS Custom Properties ===== */
+
+:root {
+  /* Paleta One Piece */
+  --op-ocean-dark:   #0a2240;
+  --op-ocean-mid:    #1565c0;
+  --op-ocean-light:  #1e88e5;
+  --op-gold:         #FFD600;
+  --op-gold-dark:    #F9A825;
+  --op-gold-light:   #FFF176;
+  --op-red:          #D32F2F;
+  --op-red-light:    #EF5350;
+  --op-green:        #2E7D32;
+  --op-green-light:  #4CAF50;
+  --op-parchment:    #FFF8E1;
+  --op-parchment-dark: #FFE082;
+  --op-ink:          #1A1A1A;
+  --op-white:        #FFFFFF;
+
+  /* Bordes manga */
+  --op-panel-border:  4px solid #1A1A1A;
+  --op-panel-shadow:  5px 5px 0 #1A1A1A;
+  --op-panel-shadow-lg: 8px 8px 0 #1A1A1A;
+
+  /* Tipografía */
+  --font-title:   'Bangers', 'Impact', cursive;
+  --font-body:    'Nunito', 'Arial Rounded MT Bold', sans-serif;
+
+  /* Espaciado */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  40px;
+
+  /* Transiciones */
+  --transition-fast:   0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow:   0.6s ease;
+
+  /* Z-index layers */
+  --z-base:     1;
+  --z-hud:    100;
+  --z-mascot: 200;
+  --z-overlay:500;
+}

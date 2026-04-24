@@ -1,0 +1,71 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: rgba(255, 255, 255, 0.1);
+  border: var(--op-panel-border);
+  box-shadow: 3px 3px 0 var(--op-ink);
+  border-radius: 6px;
+  padding: 10px 14px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  border-left: 6px solid var(--player-color, var(--op-gold));
+}
+
+.active {
+  background: rgba(255, 214, 0, 0.18);
+  border-color: var(--op-gold);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--op-panel-shadow);
+  animation: pulseScale 1.5s ease-in-out infinite;
+}
+
+.compact {
+  padding: 6px 10px;
+  gap: 6px;
+}
+
+.emoji {
+  font-size: 2rem;
+}
+.compact .emoji {
+  font-size: 1.4rem;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  color: var(--op-gold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.char {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.7);
+  white-space: nowrap;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-family: var(--font-title);
+}
+
+.berries {
+  font-size: 1rem;
+  color: var(--op-gold);
+}
+
+.stars {
+  font-size: 0.9rem;
+  color: #FFF176;
+}

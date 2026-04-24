@@ -1,0 +1,59 @@
+.ocean {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.night {
+  background: linear-gradient(180deg, var(--op-ocean-dark) 0%, var(--op-ocean-mid) 70%, #0d47a1 100%);
+}
+
+.day {
+  background: linear-gradient(180deg, #1565c0 0%, #1e88e5 50%, #29b6f6 100%);
+}
+
+.sky {
+  background: linear-gradient(180deg, #87CEEB 0%, #e3f2fd 60%, #b3e5fc 100%);
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  border-radius: 40% 60% 60% 40% / 30% 30% 70% 70%;
+  animation: waveMove linear infinite;
+}
+
+.wave1 {
+  height: 110px;
+  background: rgba(255, 255, 255, 0.07);
+  animation-duration: 9s;
+  bottom: 0;
+}
+
+.wave2 {
+  height: 85px;
+  background: rgba(255, 255, 255, 0.05);
+  animation-duration: 13s;
+  animation-direction: reverse;
+  bottom: 15px;
+}
+
+.wave3 {
+  height: 65px;
+  background: rgba(255, 255, 255, 0.04);
+  animation-duration: 7s;
+  bottom: 28px;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

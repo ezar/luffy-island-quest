@@ -1,0 +1,255 @@
+/* =====================================================
+   CatchGame.module.css — Luffy Island Quest
+   Foosha Village: Catch the Meat mini-game
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
+/* ── Wrapper ──────────────────────────────────────── */
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(160deg, #1a1a2e 0%, #16213e 55%, #0f3460 100%);
+  font-family: 'Bangers', 'Impact', cursive;
+  overflow: hidden;
+  outline: none; /* suppress focus ring; we handle keyboard ourselves */
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* Subtle animated ocean shimmer in background */
+.wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 110%, rgba(15, 52, 96, 0.6) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── HUD (top bar) ────────────────────────────────── */
+.hud {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(8px, 2vw, 20px);
+  padding: clamp(6px, 1.5vw, 14px) clamp(12px, 3vw, 28px);
+  background: rgba(0, 0, 0, 0.45);
+  border-bottom: 2px solid rgba(255, 210, 0, 0.35);
+  color: #ffd700;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.timerBar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #fff;
+  background: rgba(255, 215, 0, 0.12);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 6px;
+  padding: 2px 10px;
+}
+
+.hudItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 2px 10px;
+}
+
+/* ── Game Area ────────────────────────────────────── */
+.gameArea {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  /* Decorative wave at the very bottom */
+}
+
+.gameArea::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: linear-gradient(to top, rgba(15, 52, 96, 0.8), transparent);
+  pointer-events: none;
+}
+
+/* ── Meat items ───────────────────────────────────── */
+.meat {
+  position: absolute;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  cursor: none;
+  pointer-events: none;
+  transform: translateX(-50%);
+  /* slight rotation wobble as it falls */
+  animation: wobble 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+  z-index: 5;
+}
+
+@keyframes wobble {
+  0%   { transform: translateX(-50%) rotate(-8deg); }
+  50%  { transform: translateX(-50%) rotate(8deg); }
+  100% { transform: translateX(-50%) rotate(-8deg); }
+}
+
+/* ── Hat ──────────────────────────────────────────── */
+.hat {
+  position: absolute;
+  bottom: 60px;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  width: 80px;
+  text-align: center;
+  transform: translateX(-40px); /* center the 80px hat on the % anchor */
+  transition: left 0.05s linear;
+  pointer-events: none;
+  cursor: none;
+  z-index: 6;
+  filter: drop-shadow(0 0 10px rgba(255, 50, 50, 0.7));
+}
+
+/* ── Feedback Animations ──────────────────────────── */
+
+/* Miss: red border flash + gentle shake */
+.feedbackMiss {
+  animation: shakeMiss 0.4s ease-out;
+  box-shadow: inset 0 0 0 4px rgba(255, 50, 50, 0.7);
+}
+
+@keyframes shakeMiss {
+  0%   { transform: translateX(0); }
+  15%  { transform: translateX(-6px); }
+  30%  { transform: translateX(6px); }
+  45%  { transform: translateX(-4px); }
+  60%  { transform: translateX(4px); }
+  75%  { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+
+/* Catch: gold border flash */
+.feedbackCaught {
+  box-shadow: inset 0 0 0 4px rgba(255, 215, 0, 0.75);
+  animation: flashGold 0.3s ease-out;
+}
+
+@keyframes flashGold {
+  0%   { box-shadow: inset 0 0 0 4px rgba(255, 215, 0, 0); }
+  40%  { box-shadow: inset 0 0 0 6px rgba(255, 215, 0, 0.85); }
+  100% { box-shadow: inset 0 0 0 4px rgba(255, 215, 0, 0); }
+}
+
+/* ── Overlay (Win / Lose) ─────────────────────────── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.35s ease-out both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.overlayCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 2vw, 16px);
+  background: linear-gradient(145deg, rgba(26, 26, 46, 0.97), rgba(22, 33, 62, 0.97));
+  border: 2px solid rgba(255, 215, 0, 0.55);
+  border-radius: 20px;
+  padding: clamp(24px, 5vw, 48px) clamp(32px, 7vw, 64px);
+  box-shadow:
+    0 0 40px rgba(255, 215, 0, 0.2),
+    0 8px 32px rgba(0, 0, 0, 0.6);
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.overlayTitle {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  color: #ffd700;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.8);
+  line-height: 1;
+}
+
+.overlayEmoji {
+  font-size: clamp(3rem, 8vw, 5rem);
+  animation: spinBounce 0.6s ease-out 0.2s both;
+}
+
+@keyframes spinBounce {
+  0%   { transform: scale(0) rotate(-180deg); }
+  70%  { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.overlayStars {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  color: #ffd700;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+}
+
+.overlayMessage {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* ── Responsive tweaks ────────────────────────────── */
+@media (max-width: 480px) {
+  .hat {
+    width: 64px;
+    transform: translateX(-32px);
+  }
+
+  .hud {
+    gap: 6px;
+    padding: 5px 10px;
+  }
+
+  .overlayCard {
+    margin: 16px;
+    width: calc(100% - 32px);
+    padding: 20px 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .meat {
+    font-size: 2.5rem;
+  }
+
+  .hat {
+    font-size: 3rem;
+  }
+}

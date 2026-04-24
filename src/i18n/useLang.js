@@ -12,6 +12,15 @@ export const useLang = create(
         set({ lang: next, t: translations[next] })
       },
     }),
-    { name: 'luffy-lang' }
+    {
+      name: 'luffy-lang',
+      // Only persist the language code — functions can't survive JSON serialization
+      partialize: (state) => ({ lang: state.lang }),
+      merge: (persisted, current) => ({
+        ...current,
+        lang: persisted.lang ?? 'es',
+        t: translations[persisted.lang] ?? translations.es,
+      }),
+    }
   )
 )

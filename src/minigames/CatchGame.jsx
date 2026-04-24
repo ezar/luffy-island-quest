@@ -304,7 +304,7 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
           </div>
         ))}
         <div className={styles.hat} style={{ left: hatX + '%' }}>
-          🎩
+          👒
         </div>
       </div>
 

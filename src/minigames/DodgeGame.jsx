@@ -141,7 +141,7 @@ export default function DodgeGame({ difficulty, onComplete, timeLimit = null }) 
         {bolts.map(b => (
           <div key={b.id} className={styles.bolt} style={{ left: `${b.x}%`, top: `${b.y}%` }}>⚡</div>
         ))}
-        <div className={`${styles.luffy} ${hitFlash ? styles.luffyHit : ''}`} style={{ left: `${luffyX}%` }}>🎩</div>
+        <div className={`${styles.luffy} ${hitFlash ? styles.luffyHit : ''}`} style={{ left: `${luffyX}%` }}>👒</div>
       </div>
       <div className={styles.hint}>← → para moverse</div>
       {status === 'won' && <div className={styles.feedbackGood}>✅ ¡Luffy sobrevivió!</div>}

@@ -5,7 +5,7 @@ export const characters = [
     name: 'Monkey D. Luffy',
     color: '#FF5722',
     accentColor: '#FFD600',
-    emoji: '🎩',
+    emoji: '👒',
     catchphrase: '¡Voy a ser el Rey de los Piratas!',
     description: 'Capitán. Come carne. Estira el cuerpo.',
   },

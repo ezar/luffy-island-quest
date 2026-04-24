@@ -18,7 +18,7 @@ const MINIGAME_MAP = {
 function MinigameFallback() {
   return (
     <div className={styles.loading}>
-      <span className={styles.loadingHat}>🎩</span>
+      <span className={styles.loadingHat}>👒</span>
       <span>Cargando…</span>
     </div>
   )

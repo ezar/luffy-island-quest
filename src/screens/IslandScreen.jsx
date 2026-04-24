@@ -4,6 +4,7 @@ import { useGameStore } from '../store/gameStore'
 import { islands } from '../data/islands'
 import { characters } from '../data/characters'
 import OceanBackground from '../components/OceanBackground'
+import CharacterIcon from '../components/CharacterIcon'
 import styles from './IslandScreen.module.css'
 
 const MINIGAME_MAP = {
@@ -64,7 +65,7 @@ export default function IslandScreen() {
 
                 {player && char && (
                   <div className={styles.playerBadge} style={{ borderColor: char.color }}>
-                    <span>{char.emoji}</span>
+                    <span><CharacterIcon id={char.id} size={32} /></span>
                     <span>¡Turno de {player.name}!</span>
                   </div>
                 )}
@@ -101,7 +102,7 @@ export default function IslandScreen() {
           >
             <div className={styles.minigameHeader}>
               <span className={styles.minigameIsland}>{island.emoji} {island.name}</span>
-              {player && <span className={styles.minigamePlayer}>{char?.emoji} {player.name}</span>}
+              {player && <span className={styles.minigamePlayer}><CharacterIcon id={char?.id} size={24} /> {player.name}</span>}
             </div>
             <Suspense fallback={<MinigameFallback />}>
               <Minigame

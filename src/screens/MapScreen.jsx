@@ -3,6 +3,7 @@ import { useGameStore } from '../store/gameStore'
 import { islands } from '../data/islands'
 import { characters } from '../data/characters'
 import OceanBackground from '../components/OceanBackground'
+import CharacterIcon from '../components/CharacterIcon'
 import styles from './MapScreen.module.css'
 
 export default function MapScreen() {
@@ -67,7 +68,7 @@ export default function MapScreen() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <span>{char?.emoji}</span>
+              <span><CharacterIcon id={char?.id} size={28} /></span>
               <span>¡Turno de {player.name}!</span>
               <span className={styles.bannerBerries}>🍖 {player.berries}</span>
             </motion.div>

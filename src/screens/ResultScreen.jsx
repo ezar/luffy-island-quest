@@ -4,6 +4,7 @@ import { islands } from '../data/islands'
 import { characters } from '../data/characters'
 import StarRating from '../components/StarRating'
 import OceanBackground from '../components/OceanBackground'
+import CharacterIcon from '../components/CharacterIcon'
 import styles from './ResultScreen.module.css'
 
 export default function ResultScreen() {
@@ -40,7 +41,7 @@ export default function ResultScreen() {
 
           {player && char && (
             <div className={styles.playerInfo} style={{ borderColor: char.color }}>
-              <span className={styles.charEmoji}>{char.emoji}</span>
+              <span className={styles.charEmoji}><CharacterIcon id={char.id} size={44} /></span>
               <span className={styles.playerName}>{player.name}</span>
             </div>
           )}

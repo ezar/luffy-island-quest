@@ -3,6 +3,7 @@ import { useGameStore } from '../store/gameStore'
 import { characters } from '../data/characters'
 import StarRating from '../components/StarRating'
 import OceanBackground from '../components/OceanBackground'
+import CharacterIcon from '../components/CharacterIcon'
 import styles from './EndScreen.module.css'
 
 export default function EndScreen() {
@@ -63,7 +64,7 @@ export default function EndScreen() {
                   style={char ? { borderColor: char.color } : {}}
                 >
                   <span className={styles.medal}>{medals[idx] || '🏅'}</span>
-                  <span className={styles.rankEmoji}>{char?.emoji}</span>
+                  <span className={styles.rankEmoji}><CharacterIcon id={char?.id} size={44} /></span>
                   <div className={styles.rankInfo}>
                     <div className={styles.rankName}>{player.name}</div>
                     <div className={styles.rankChar}>{char?.name}</div>

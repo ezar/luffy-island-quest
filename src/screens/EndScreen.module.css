@@ -115,6 +115,13 @@
   font-size: 0.8rem;
   color: rgba(255,255,255,0.5);
 }
+.rankTitle {
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  color: var(--op-gold);
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
 
 .rankScore {
   display: flex;

@@ -64,6 +64,7 @@ export default function EndScreen() {
                   <div className={styles.rankInfo}>
                     <div className={styles.rankName}>{player.name}</div>
                     <div className={styles.rankChar}>{char?.name}</div>
+                    <div className={styles.rankTitle}>{t.pirateTitle(player.berries)}</div>
                   </div>
                   <div className={styles.rankScore}>
                     <span className={styles.rankBerries}>🍖 {player.berries}</span>

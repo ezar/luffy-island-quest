@@ -5,6 +5,7 @@ import { characters } from '../data/characters'
 import StarRating from '../components/StarRating'
 import OceanBackground from '../components/OceanBackground'
 import CharacterIcon from '../components/CharacterIcon'
+import Confetti from '../components/Confetti'
 import { useLang } from '../i18n/useLang'
 import styles from './ResultScreen.module.css'
 
@@ -27,6 +28,7 @@ export default function ResultScreen() {
 
   return (
     <div className={styles.screen}>
+      {result.stars === 3 && <Confetti />}
       <OceanBackground>
         <motion.div
           className={styles.panel}

@@ -83,6 +83,15 @@ export const translations = {
     finalWon: '👑 ¡ONE PIECE!',
     finalLost: '💀 ¡Error!',
 
+    // Pirate titles (EndScreen)
+    pirateTitle: (berries) => {
+      if (berries >= 1000) return '👑 Rey Pirata'
+      if (berries >= 750)  return '⚓ Almirante'
+      if (berries >= 500)  return '⚔️ Capitán'
+      if (berries >= 250)  return '🏴‍☠️ Corsario'
+      return '🌊 Marinero'
+    },
+
     // Language toggle
     langToggle: 'EN',
   },
@@ -170,6 +179,15 @@ export const translations = {
     errors: (n, max) => `❌ ${n}/${max}`,
     finalWon: '👑 ONE PIECE!',
     finalLost: '💀 Wrong!',
+
+    // Pirate titles (EndScreen)
+    pirateTitle: (berries) => {
+      if (berries >= 1000) return '👑 Pirate King'
+      if (berries >= 750)  return '⚓ Admiral'
+      if (berries >= 500)  return '⚔️ Captain'
+      if (berries >= 250)  return '🏴‍☠️ Privateer'
+      return '🌊 Sailor'
+    },
 
     // Language toggle
     langToggle: 'ES',

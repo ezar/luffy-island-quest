@@ -9,6 +9,7 @@
   position: relative;
   width: 100%;
   height: 100%;
+  touch-action: none;
 }
 
 .mapTitle {
@@ -68,6 +69,7 @@
   z-index: 3;
   gap: 0;
   transition: box-shadow 0.15s;
+  touch-action: manipulation;
 }
 
 .islandEmoji {

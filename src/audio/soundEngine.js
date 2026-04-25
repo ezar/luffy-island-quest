@@ -168,6 +168,101 @@ export const sounds = {
     o.start(); o.stop(c.currentTime + 0.45)
   }),
 
+  catchMeat: () => play(c => {
+    const o = c.createOscillator(); const g = c.createGain()
+    o.connect(g); g.connect(c.destination)
+    o.frequency.setValueAtTime(350, c.currentTime)
+    o.frequency.exponentialRampToValueAtTime(700, c.currentTime + 0.06)
+    g.gain.setValueAtTime(0.28, c.currentTime)
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.1)
+    o.start(); o.stop(c.currentTime + 0.1)
+  }),
+
+  catchMiss: () => play(c => {
+    const o = c.createOscillator(); const g = c.createGain()
+    o.type = 'triangle'
+    o.connect(g); g.connect(c.destination)
+    o.frequency.setValueAtTime(220, c.currentTime)
+    o.frequency.exponentialRampToValueAtTime(80, c.currentTime + 0.14)
+    g.gain.setValueAtTime(0.18, c.currentTime)
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.14)
+    o.start(); o.stop(c.currentTime + 0.14)
+  }),
+
+  flip: () => play(c => {
+    const o = c.createOscillator(); const g = c.createGain()
+    o.connect(g); g.connect(c.destination)
+    o.frequency.setValueAtTime(500, c.currentTime)
+    o.frequency.exponentialRampToValueAtTime(900, c.currentTime + 0.04)
+    g.gain.setValueAtTime(0.15, c.currentTime)
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.07)
+    o.start(); o.stop(c.currentTime + 0.07)
+  }),
+
+  match: () => play(c => {
+    [660, 990].forEach((f, i) => {
+      const o = c.createOscillator(); const g = c.createGain()
+      o.connect(g); g.connect(c.destination)
+      o.frequency.value = f
+      const t = c.currentTime + i * 0.1
+      g.gain.setValueAtTime(0.2, t)
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.18)
+      o.start(t); o.stop(t + 0.18)
+    })
+  }),
+
+  mismatch: () => play(c => {
+    const o = c.createOscillator(); const g = c.createGain()
+    o.type = 'sawtooth'
+    o.connect(g); g.connect(c.destination)
+    o.frequency.setValueAtTime(200, c.currentTime)
+    o.frequency.exponentialRampToValueAtTime(110, c.currentTime + 0.18)
+    g.gain.setValueAtTime(0.16, c.currentTime)
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.18)
+    o.start(); o.stop(c.currentTime + 0.18)
+  }),
+
+  rhythmHit: () => play(c => {
+    const o = c.createOscillator(); const g = c.createGain()
+    o.connect(g); g.connect(c.destination)
+    o.frequency.setValueAtTime(180, c.currentTime)
+    o.frequency.exponentialRampToValueAtTime(55, c.currentTime + 0.08)
+    g.gain.setValueAtTime(0.35, c.currentTime)
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.1)
+    o.start(); o.stop(c.currentTime + 0.1)
+  }),
+
+  rhythmMiss: () => play(c => {
+    const o = c.createOscillator(); const g = c.createGain()
+    o.type = 'sawtooth'
+    o.connect(g); g.connect(c.destination)
+    o.frequency.value = 140
+    g.gain.setValueAtTime(0.12, c.currentTime)
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.12)
+    o.start(); o.stop(c.currentTime + 0.12)
+  }),
+
+  zap: () => play(c => {
+    const o = c.createOscillator(); const g = c.createGain()
+    o.type = 'sawtooth'
+    o.connect(g); g.connect(c.destination)
+    o.frequency.setValueAtTime(900, c.currentTime)
+    o.frequency.exponentialRampToValueAtTime(200, c.currentTime + 0.18)
+    g.gain.setValueAtTime(0.28, c.currentTime)
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.2)
+    o.start(); o.stop(c.currentTime + 0.2)
+  }),
+
+  reveal: () => play(c => {
+    const o = c.createOscillator(); const g = c.createGain()
+    o.connect(g); g.connect(c.destination)
+    o.frequency.setValueAtTime(600, c.currentTime)
+    o.frequency.exponentialRampToValueAtTime(900, c.currentTime + 0.05)
+    g.gain.setValueAtTime(0.18, c.currentTime)
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.1)
+    o.start(); o.stop(c.currentTime + 0.1)
+  }),
+
   fanfare: () => play(c => {
     const seq = [523, 659, 784, 1047, 784, 1047]
     const durs = [0.1, 0.1, 0.1, 0.15, 0.1, 0.4]

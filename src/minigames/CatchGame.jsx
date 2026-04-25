@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import styles from './CatchGame.module.css';
 import LuffyHatSvg from '../components/LuffyHatSvg';
 import { useLang } from '../i18n/useLang';
+import { sounds } from '../audio/soundEngine';
 
 const DIFFICULTY_CONFIG = {
   easy: {
@@ -151,6 +152,7 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
       setMeats([...updated]);
 
       if (catchOccurred) {
+        sounds.catchMeat();
         caughtRef.current = newCaught;
         setCaught(newCaught);
         setFlashCaught(true);
@@ -158,6 +160,7 @@ export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit =
       }
 
       if (missOccurred) {
+        sounds.catchMiss();
         missedRef.current = newMissed;
         setMissed(newMissed);
         setShakeMiss(true);

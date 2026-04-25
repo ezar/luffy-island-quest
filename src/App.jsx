@@ -9,7 +9,7 @@ import EndScreen from './screens/EndScreen'
 import LuffyHat from './components/LuffyHat'
 import Footer from './components/Footer'
 import SoundToggle from './components/SoundToggle'
-import { unlockAudio, startBgMusic } from './audio/soundEngine'
+import { unlockAudio, startBgMusic, stopBgMusic } from './audio/soundEngine'
 import styles from './App.module.css'
 
 export default function App() {
@@ -25,6 +25,15 @@ export default function App() {
     window.addEventListener('pointerdown', onFirstGesture)
     return () => window.removeEventListener('pointerdown', onFirstGesture)
   }, [])
+
+  // Pause bg music during minigame, resume everywhere else
+  useEffect(() => {
+    if (phase === 'minigame') {
+      stopBgMusic()
+    } else {
+      startBgMusic()
+    }
+  }, [phase])
 
   return (
     <>

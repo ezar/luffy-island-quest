@@ -1,5 +1,6 @@
 import { useLang } from '../i18n/useLang'
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { sounds } from '../audio/soundEngine'
 import styles from './MemoryGame.module.css'
 
 const CARD_SYMBOLS = ['🦈','⚓','🗺️','🏴‍☠️','⚔️','🐠','🌊','🐙']
@@ -65,6 +66,7 @@ export default function MemoryGame({ difficulty, onComplete, timeLimit = null, b
 
     const newCards = cards.map((c, i) => i === idx ? { ...c, flipped: true } : c)
     const newSelected = [...selected, idx]
+    sounds.flip()
     setCards(newCards)
     setSelected(newSelected)
 
@@ -73,6 +75,7 @@ export default function MemoryGame({ difficulty, onComplete, timeLimit = null, b
       blockRef.current = true
       if (newCards[a].sym === newCards[b].sym) {
         // Match
+        sounds.match()
         setTimeout(() => {
           setCards(prev => prev.map((c, i) => (i === a || i === b) ? { ...c, matched: true } : c))
           setSelected([])
@@ -89,6 +92,7 @@ export default function MemoryGame({ difficulty, onComplete, timeLimit = null, b
       } else {
         // Mismatch
         const newMm = mismatches + 1
+        sounds.mismatch()
         setMismatches(newMm)
         setWrongFlash(true)
         setTimeout(() => {

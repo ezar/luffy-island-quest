@@ -1,5 +1,6 @@
 import { useLang } from '../i18n/useLang'
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { sounds } from '../audio/soundEngine'
 import styles from './DodgeGame.module.css'
 import LuffyHatSvg from '../components/LuffyHatSvg'
 
@@ -99,6 +100,7 @@ export default function DodgeGame({ difficulty, onComplete, timeLimit = null, bo
           const lx = luffyXRef.current
           if (b.y >= 78 && b.y <= 90 && Math.abs(b.x - lx) < 7) {
             // HIT
+            sounds.zap()
             livesRef.current--
             setLives(livesRef.current)
             setHitFlash(true)

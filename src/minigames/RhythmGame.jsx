@@ -1,4 +1,5 @@
 import { useLang } from '../i18n/useLang'
+import { sounds } from '../audio/soundEngine'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './RhythmGame.module.css'
 
@@ -60,6 +61,7 @@ export default function RhythmGame({ difficulty, onComplete, timeLimit = null })
     if (best) {
       goneRef.current.add(best.id)
       setGone(new Set(goneRef.current))
+      sounds.rhythmHit()
       hitsRef.current++
       setHits(hitsRef.current)
       setLaneFlash(f => ({ ...f, [laneIdx]: 'hit' }))
@@ -88,6 +90,7 @@ export default function RhythmGame({ difficulty, onComplete, timeLimit = null })
         if (now > n.time + hitWindow) {
           goneRef.current.add(n.id)
           setGone(new Set(goneRef.current))
+          sounds.rhythmMiss()
           missesRef.current++
           setMisses(missesRef.current)
           setLaneFlash(f => ({ ...f, [n.lane]: 'miss' }))

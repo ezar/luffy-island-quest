@@ -1,5 +1,6 @@
 import { useLang } from '../i18n/useLang'
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { sounds } from '../audio/soundEngine'
 import styles from './FinalGame.module.css'
 
 const SYMBOLS = ['👑','⚓','🏴‍☠️','⚔️','🗺️','🔱','💎','🌊']
@@ -53,6 +54,7 @@ export default function FinalGame({ difficulty, onComplete, timeLimit = null }) 
         setPhase('input')
         return
       }
+      sounds.reveal()
       setShowIdx(i)
       i++
       setTimeout(showNext, 800)
@@ -72,6 +74,7 @@ export default function FinalGame({ difficulty, onComplete, timeLimit = null }) 
 
     if (newInput[pos] !== sequence[pos]) {
       // Wrong
+      sounds.mismatch()
       setWrongIdx(symIdx)
       errorsRef.current++
       setErrors(errorsRef.current)
@@ -92,6 +95,7 @@ export default function FinalGame({ difficulty, onComplete, timeLimit = null }) 
 
     if (newInput.length === sequence.length) {
       // Round complete!
+      sounds.win()
       setPhase('correct')
       setTimeout(() => {
         if (round >= totalRounds) {

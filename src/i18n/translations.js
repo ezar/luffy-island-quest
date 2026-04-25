@@ -92,6 +92,15 @@ export const translations = {
       return '🌊 Marinero'
     },
 
+    // Character abilities (IslandScreen)
+    abilities: {
+      berryBonus:   { label: '🍖 +30% Berries',   hint: '¡El apetito de Luffy da sus frutos!' },
+      extraLife:    { label: '❤️ +1 Vida',          hint: '¡La resistencia de Zoro te protege!' },
+      timeBonus:    { label: '⏱️ +15s Tiempo',      hint: '¡La previsión de Nami te da más tiempo!' },
+      extraAttempt: { label: '🔑 +1 Intento',       hint: '¡La puntería de Usopp no falla!' },
+      easyTarget:   { label: '🍽️ Objetivo -1',      hint: '¡Sanji ya cocinó parte de la carne!' },
+    },
+
     // Language toggle
     langToggle: 'EN',
   },
@@ -187,6 +196,15 @@ export const translations = {
       if (berries >= 500)  return '⚔️ Captain'
       if (berries >= 250)  return '🏴‍☠️ Privateer'
       return '🌊 Sailor'
+    },
+
+    // Character abilities (IslandScreen)
+    abilities: {
+      berryBonus:   { label: '🍖 +30% Berries',   hint: "Luffy's appetite pays off!" },
+      extraLife:    { label: '❤️ +1 Life',          hint: "Zoro's endurance protects you!" },
+      timeBonus:    { label: '⏱️ +15s Time',        hint: "Nami's foresight gives you more time!" },
+      extraAttempt: { label: '🔑 +1 Attempt',       hint: "Usopp's aim never misses!" },
+      easyTarget:   { label: '🍽️ Target -1',        hint: 'Sanji already cooked some meat!' },
     },
 
     // Language toggle

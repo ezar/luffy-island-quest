@@ -133,8 +133,35 @@
 .panelActive { border-color: var(--op-gold); animation: pulseScale 1.2s ease-in-out infinite; }
 .panelDone { background: rgba(255,214,0,0.15); }
 .panelEmoji { font-size: 1.8rem; }
-.panelNum { font-family: var(--font-title); font-size: 0.85rem; color: rgba(255,255,255,0.6); }
-.panelChar { font-family: var(--font-title); font-size: 0.9rem; color: var(--op-gold); }
+.panelChar { font-family: var(--font-title); font-size: 0.85rem; color: var(--op-gold); }
+.panelName { font-family: var(--font-body); font-size: 0.72rem; color: rgba(255,255,255,0.65); max-width: 68px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nameLabel {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  color: var(--op-parchment);
+  white-space: nowrap;
+  letter-spacing: 1px;
+}
+.nameInput {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 6px 10px;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid var(--op-gold);
+  border-radius: 6px;
+  color: #fff;
+  outline: none;
+  min-width: 0;
+}
+.nameInput::placeholder { color: rgba(255,255,255,0.35); }
+.nameInput:focus { background: rgba(255,255,255,0.15); }
 
 .charGrid {
   display: grid;
@@ -160,6 +187,14 @@
 .charTaken { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
 .charEmoji { font-size: clamp(1.4rem, 2.5vw, 2rem); }
 .charName { font-family: var(--font-title); font-size: 0.75rem; letter-spacing: 0.5px; }
+.charAbility {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  color: var(--op-ink);
+  opacity: 0.7;
+  text-align: center;
+  line-height: 1.2;
+}
 
 .startBtn {
   font-family: var(--font-title);

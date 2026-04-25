@@ -13,8 +13,11 @@ export default function StartScreen() {
   const { t, lang } = useLang()
   const [numPlayers, setNumPlayers] = useState(1)
   const [assignments, setAssignments] = useState({})
+  const [names, setNames] = useState({})
   const [difficulty, setDifficulty] = useState('easy')
   const [selectingFor, setSelectingFor] = useState(0)
+
+  const defaultName = (i) => lang === 'es' ? `Jugador ${i + 1}` : `Player ${i + 1}`
 
   const pickCharacter = (charId) => {
     const next = { ...assignments }
@@ -31,6 +34,7 @@ export default function StartScreen() {
   const resetPlayers = (n) => {
     setNumPlayers(n)
     setAssignments({})
+    setNames({})
     setSelectingFor(0)
   }
 
@@ -39,7 +43,7 @@ export default function StartScreen() {
   const handleStart = () => {
     sounds.click()
     const players = Array.from({ length: numPlayers }, (_, i) => ({
-      name: lang === 'es' ? `Jugador ${i + 1}` : `Player ${i + 1}`,
+      name: names[i]?.trim() || defaultName(i),
       characterId: assignments[i],
     }))
     startGame(players, difficulty)
@@ -105,11 +109,24 @@ export default function StartScreen() {
                     <span className={styles.panelEmoji}>
                       {ch ? <CharacterIcon id={ch.id} size={36} /> : '❓'}
                     </span>
-                    <span className={styles.panelNum}>{lang === 'es' ? 'J' : 'P'}{i + 1}</span>
                     <span className={styles.panelChar}>{ch ? ch.name.split(' ')[0] : '—'}</span>
+                    <span className={styles.panelName}>{names[i]?.trim() || defaultName(i)}</span>
                   </div>
                 )
               })}
+            </div>
+
+            {/* Name input for active player */}
+            <div className={styles.nameRow}>
+              <span className={styles.nameLabel}>{t.enterName(selectingFor + 1)}</span>
+              <input
+                className={styles.nameInput}
+                type="text"
+                maxLength={16}
+                placeholder={defaultName(selectingFor)}
+                value={names[selectingFor] ?? ''}
+                onChange={e => setNames(prev => ({ ...prev, [selectingFor]: e.target.value }))}
+              />
             </div>
 
             {/* Character grid */}
@@ -134,6 +151,9 @@ export default function StartScreen() {
                   >
                     <span className={styles.charEmoji}><CharacterIcon id={ch.id} size={56} /></span>
                     <span className={styles.charName}>{ch.name.split(' ').pop()}</span>
+                    {ch.ability && t.abilities?.[ch.ability.id] && (
+                      <span className={styles.charAbility}>{t.abilities[ch.ability.id].label}</span>
+                    )}
                   </button>
                 )
               })}

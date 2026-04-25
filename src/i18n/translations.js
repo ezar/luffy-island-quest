@@ -8,6 +8,7 @@ export const translations = {
     players: 'Jugadores:',
     chooseCrewmate: (n) => `Jugador ${n}: elige tripulante`,
     crewReady: 'Tripulación lista ✓',
+    enterName: (n) => `Nombre J${n}:`,
     sail: '🚢 ¡ZARPAR!',
 
     // MapScreen
@@ -117,6 +118,7 @@ export const translations = {
     players: 'Players:',
     chooseCrewmate: (n) => `Player ${n}: choose crewmate`,
     crewReady: 'Crew ready ✓',
+    enterName: (n) => `Name P${n}:`,
     sail: '🚢 SET SAIL!',
 
     // MapScreen

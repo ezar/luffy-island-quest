@@ -81,15 +81,24 @@
   border: 3px solid var(--op-ink);
   box-shadow: 3px 3px 0 var(--op-ink);
   cursor: pointer;
-  background: var(--op-gold);
-  color: var(--op-ink);
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.55);
   border-radius: 3px;
   letter-spacing: 1px;
-  transition: transform 0.1s, box-shadow 0.1s;
+  transition: transform 0.1s, box-shadow 0.1s, background 0.1s, color 0.1s;
+  touch-action: manipulation;
 }
 .diffBtn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--op-ink); }
-.diffHard { background: var(--op-parchment); }
-.diffActive { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--op-ink); }
+.diffActive {
+  transform: translate(-2px,-2px);
+  box-shadow: 5px 5px 0 var(--op-ink);
+  background: var(--op-gold);
+  color: var(--op-ink);
+}
+.diffHard.diffActive {
+  background: var(--op-red);
+  color: #fff;
+}
 
 .countRow { display: flex; gap: 10px; }
 .countBtn {

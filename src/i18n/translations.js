@@ -14,6 +14,8 @@ export const translations = {
     mapTitle: '☠ Gran Line ☠',
     tapToPlay: 'Toca tu isla para comenzar',
     turnOf: (name) => `¡Turno de ${name}!`,
+    rivalryLeading: '🏆 ¡Vas en cabeza!',
+    rivalryBehind: (name, gap) => `⚔️ ${name} te lleva ${gap} 🍖`,
 
     // IslandScreen
     startMinigame: '⚓ ¡Empezar!',
@@ -120,6 +122,8 @@ export const translations = {
     mapTitle: '☠ Grand Line ☠',
     tapToPlay: 'Tap your island to begin',
     turnOf: (name) => `${name}'s turn!`,
+    rivalryLeading: '🏆 You\'re in the lead!',
+    rivalryBehind: (name, gap) => `⚔️ ${name} is ahead by ${gap} 🍖`,
 
     // IslandScreen
     startMinigame: '⚓ Start!',

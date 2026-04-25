@@ -61,6 +61,40 @@
   box-shadow: 3px 3px 0 var(--op-ink);
 }
 
+.speechBubble {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(10, 34, 64, 0.88);
+  border: 2.5px solid var(--op-gold);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.speechCharIcon { flex-shrink: 0; margin-top: 2px; }
+
+.speechText {
+  font-family: var(--font-body);
+  font-size: clamp(0.82rem, 1.8vw, 0.95rem);
+  color: var(--op-parchment);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.speechTail {
+  position: absolute;
+  bottom: -10px;
+  left: 24px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid var(--op-gold);
+}
+
 .abilityBadge {
   display: flex;
   flex-direction: column;

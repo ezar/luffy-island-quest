@@ -82,6 +82,24 @@ export default function IslandScreen() {
                   </div>
                 )}
 
+                {char?.dialogue?.[island.minigame] && (
+                  <motion.div
+                    className={styles.speechBubble}
+                    style={{ borderColor: char.color }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.25, type: 'spring', stiffness: 200 }}
+                  >
+                    <span className={styles.speechCharIcon}>
+                      <CharacterIcon id={char.id} size={28} />
+                    </span>
+                    <span className={styles.speechText}>
+                      {txt(char.dialogue[island.minigame])}
+                    </span>
+                    <span className={styles.speechTail} style={{ borderTopColor: char.color }} />
+                  </motion.div>
+                )}
+
                 <div className={styles.storyBox}>
                   <p className={styles.storyText}>{txt(island.story)}</p>
                 </div>

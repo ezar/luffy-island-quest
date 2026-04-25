@@ -1,4 +1,4 @@
-/** @type {Array<{id:string,name:string,color:string,accentColor:string,emoji:string,catchphrase:string,description:string,ability:{id:string}}>} */
+/** @type {Array<{id:string,name:string,color:string,accentColor:string,emoji:string,catchphrase:string,description:string,ability:{id:string},dialogue:Object}>} */
 export const characters = [
   {
     id: 'luffy',
@@ -9,6 +9,14 @@ export const characters = [
     catchphrase: '¡Voy a ser el Rey de los Piratas!',
     description: 'Capitán. Come carne. Estira el cuerpo.',
     ability: { id: 'berryBonus' },
+    dialogue: {
+      catch:   { es: '¡CARNE! ¡Mi carne! ¡No dejes caer ni un trozo!', en: 'MEAT! My meat! Don\'t let a single piece fall!' },
+      memory:  { es: 'Nami dice que hay que memorizar... ¡Yo solo recuerdo la carne!', en: 'Nami says to memorize… I only remember meat!' },
+      rhythm:  { es: '¡Boom boom boom! ¡Me encanta el ritmo de la batalla!', en: 'Boom boom boom! I love the rhythm of battle!' },
+      dodge:   { es: '¡El caucho no conduce la electricidad, jajaja! ¡Nada puede pararme!', en: 'Rubber doesn\'t conduct electricity, hahaha! Nothing can stop me!' },
+      puzzle:  { es: '¡Voy a rescatar a Robin sí o sí! ¡Nadie se queda atrás!', en: 'I\'m going to rescue Robin no matter what! Nobody gets left behind!' },
+      finale:  { es: '¡Seré el Rey de los Piratas! ¡UN HITO!', en: 'I\'ll be the Pirate King! ONE HIT!' },
+    },
   },
   {
     id: 'zoro',
@@ -19,6 +27,14 @@ export const characters = [
     catchphrase: '¡Nada me impide llegar a la cima!',
     description: 'El mejor espadachín. Se pierde siempre.',
     ability: { id: 'extraLife' },
+    dialogue: {
+      catch:   { es: '...¿Carne? Bueno. No está mal entrenar los reflejos.', en: '…Meat? Fine. Training reflexes isn\'t bad.' },
+      memory:  { es: 'Un guerrero jamás olvida a sus enemigos. Ni las cartas.', en: 'A warrior never forgets his enemies. Or cards.' },
+      rhythm:  { es: 'El ritmo de la espada… todo tiene su cadencia. ¡Ni un fallo!', en: 'The rhythm of the sword… everything has its tempo. Not one miss!' },
+      dodge:   { es: '¡Esquivar rayos no es nada para el futuro mejor espadachín del mundo!', en: 'Dodging lightning is nothing for the future greatest swordsman!' },
+      puzzle:  { es: '¡No dejaré que nadie toque a un compañero de tripulación! ¡Ni el Gobierno Mundial!', en: 'I won\'t let anyone touch a crewmate! Not even the World Government!' },
+      finale:  { es: '¡Nada me impedirá llegar a la cima! ¡Esta promesa se la hice a Kuina!', en: 'Nothing will stop me from reaching the top! I made this promise to Kuina!' },
+    },
   },
   {
     id: 'nami',
@@ -29,6 +45,14 @@ export const characters = [
     catchphrase: '¡Las Berries son mi vida!',
     description: 'Navegante. Ama el dinero y los mapas.',
     ability: { id: 'timeBonus' },
+    dialogue: {
+      catch:   { es: '¡Ni una Berry desperdiciada! ¡Esa carne vale dinero, idiotas!', en: 'Not one Berry wasted! That meat is worth money, idiots!' },
+      memory:  { es: '¡Yo tengo la mejor memoria de toda la tripulación! ¡Observad y aprended!', en: 'I have the best memory on the whole crew! Watch and learn!' },
+      rhythm:  { es: '¡Navegar requiere oído musical! ¡Sigue el ritmo o pagas el doble!', en: 'Navigation requires musical ear! Follow the rhythm or pay double!' },
+      dodge:   { es: '¡Cuidado con los rayos! ¡El Thousand Sunny no tiene seguro de rayos!', en: 'Watch out for lightning! The Thousand Sunny doesn\'t have lightning insurance!' },
+      puzzle:  { es: 'Un código secreto… ¡Le cobraré a Robin 100.000 Berries por rescatarla!', en: 'A secret code… I\'ll charge Robin 100,000 Berries for the rescue!' },
+      finale:  { es: '¡Raftel significa el mapa más grande del mundo! ¡Y ese mapa es MÍO!', en: 'Raftel means the biggest map in the world! And that map is MINE!' },
+    },
   },
   {
     id: 'usopp',
@@ -39,6 +63,14 @@ export const characters = [
     catchphrase: '¡Soy el valiente guerrero del mar!',
     description: 'Francotirador. Cuenta historias increíbles.',
     ability: { id: 'extraAttempt' },
+    dialogue: {
+      catch:   { es: '¡El gran guerrero del mar tiene reflejos de félido! ¡He atrapado 10.000 cosas cayendo!', en: 'The great warrior of the sea has cat-like reflexes! I\'ve caught 10,000 falling things!' },
+      memory:  { es: '¡Recuerdo perfectamente cada una de mis 8.000 batallas épicas!', en: 'I perfectly remember each of my 8,000 epic battles!' },
+      rhythm:  { es: '¡Conozco 50 canciones piratas de memoria! ¡Nadie toca el tambor como yo!', en: 'I know 50 pirate songs by heart! Nobody beats the drum like me!' },
+      dodge:   { es: '¡Me he esquivado 10.000 rayos en mi vida! ¡Esto es pan comido! (¡Tengo miedo!)', en: 'I\'ve dodged 10,000 bolts in my life! Easy peasy! (I\'m scared!)' },
+      puzzle:  { es: '¡Soy el maestro de los códigos secretos! ¡Inventé el código más difícil del mundo!', en: 'I\'m the master of secret codes! I invented the hardest code in the world!' },
+      finale:  { es: '¡El gran guerrero Usopp llega a Raftel! ¡Ya lo sabía desde el principio!', en: 'The great warrior Usopp reaches Raftel! I knew it from the very beginning!' },
+    },
   },
   {
     id: 'sanji',
@@ -49,5 +81,13 @@ export const characters = [
     catchphrase: '¡Un caballero nunca abandona a una dama!',
     description: 'Cocinero. Patea con elegancia.',
     ability: { id: 'easyTarget' },
+    dialogue: {
+      catch:   { es: '¡Esa carne merece ser bien cocinada! ¡No se desperdicia nada en mi cocina!', en: 'That meat deserves to be cooked properly! Nothing goes to waste in my kitchen!' },
+      memory:  { es: 'Un gran cocinero recuerda cada receta de memoria. Y cada hermosa sonrisa también.', en: 'A great chef memorizes every recipe. And every beautiful smile too.' },
+      rhythm:  { es: '¡La elegancia tiene ritmo, señoritas! ¡Observad mis pasos!', en: 'Elegance has rhythm, ladies! Observe my footwork!' },
+      dodge:   { es: '¡Un caballero esquiva con estilo! ¡Los rayos nunca tocan a los elegantes!', en: 'A gentleman dodges with style! Lightning never strikes the elegant!' },
+      puzzle:  { es: '¡Por Robin, descifraría cualquier código del universo! ¡Mellorine!', en: 'For Robin, I\'d crack any code in the universe! Mellorine!' },
+      finale:  { es: '¡Quiero encontrar el All Blue antes de llegar al One Piece! ¡Es mi sueño!', en: 'I want to find the All Blue before reaching One Piece! It\'s my dream!' },
+    },
   },
 ]

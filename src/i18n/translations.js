@@ -16,6 +16,7 @@ export const translations = {
     turnOf: (name) => `¡Turno de ${name}!`,
     rivalryLeading: '🏆 ¡Vas en cabeza!',
     rivalryBehind: (name, gap) => `⚔️ ${name} te lleva ${gap} 🍖`,
+    shopTitle: 'Tienda Pirata',
 
     // IslandScreen
     startMinigame: '⚓ ¡Empezar!',
@@ -124,6 +125,7 @@ export const translations = {
     turnOf: (name) => `${name}'s turn!`,
     rivalryLeading: '🏆 You\'re in the lead!',
     rivalryBehind: (name, gap) => `⚔️ ${name} is ahead by ${gap} 🍖`,
+    shopTitle: 'Pirate Shop',
 
     // IslandScreen
     startMinigame: '⚓ Start!',

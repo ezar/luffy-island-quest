@@ -24,12 +24,12 @@ const DIFFICULTY_CONFIG = {
 
 let nextId = 0;
 
-export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit = null, ability = null }) {
+export default function CatchGame({ difficulty = 'easy', onComplete, timeLimit = null, bonusTime = 0, easyTarget = false }) {
   const { t } = useLang();
   const cfg = DIFFICULTY_CONFIG[difficulty] || DIFFICULTY_CONFIG.easy;
   const maxMisses = cfg.maxMisses;
-  const target = ability === 'easyTarget' ? Math.max(1, cfg.target - 1) : cfg.target;
-  const totalTime = timeLimit ?? cfg.defaultTime;
+  const target = easyTarget ? Math.max(1, cfg.target - 1) : cfg.target;
+  const totalTime = timeLimit ?? (cfg.defaultTime + bonusTime);
 
   const [meats, setMeats] = useState([]);
   const [caught, setCaught] = useState(0);

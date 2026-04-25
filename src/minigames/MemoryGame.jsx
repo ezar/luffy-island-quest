@@ -15,10 +15,10 @@ function makeCards(numPairs) {
   return cards
 }
 
-export default function MemoryGame({ difficulty, onComplete, timeLimit = null, ability = null }) {
+export default function MemoryGame({ difficulty, onComplete, timeLimit = null, bonusTime = 0 }) {
   const { t } = useLang()
   const numPairs = difficulty === 'easy' ? 4 : 6
-  const defaultTime = (difficulty === 'easy' ? 60 : 45) + (ability === 'timeBonus' ? 15 : 0)
+  const defaultTime = (difficulty === 'easy' ? 60 : 45) + bonusTime
   const totalTime = timeLimit != null ? timeLimit : defaultTime
 
   const [cards, setCards] = useState(() => makeCards(numPairs))

@@ -3,10 +3,10 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './DodgeGame.module.css'
 import LuffyHatSvg from '../components/LuffyHatSvg'
 
-export default function DodgeGame({ difficulty, onComplete, timeLimit = null, ability = null }) {
+export default function DodgeGame({ difficulty, onComplete, timeLimit = null, bonusTime = 0, bonusLives = 0 }) {
   const { t } = useLang()
-  const maxLives = (difficulty === 'easy' ? 3 : 2) + (ability === 'extraLife' ? 1 : 0)
-  const defaultTime = (difficulty === 'easy' ? 40 : 35) + (ability === 'timeBonus' ? 15 : 0)
+  const maxLives = (difficulty === 'easy' ? 3 : 2) + bonusLives
+  const defaultTime = (difficulty === 'easy' ? 40 : 35) + bonusTime
   const totalTime = timeLimit != null ? timeLimit : defaultTime
   const boltInterval = difficulty === 'easy' ? 1400 : 900
   const boltSpeed = difficulty === 'easy' ? 3.5 : 5.5 // % per frame

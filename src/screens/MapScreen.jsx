@@ -1,8 +1,10 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
 import { useLang } from '../i18n/useLang'
 import { islands } from '../data/islands'
 import { characters } from '../data/characters'
+import { POWERUPS } from '../data/powerups'
 import OceanBackground from '../components/OceanBackground'
 import CharacterIcon from '../components/CharacterIcon'
 import { sounds } from '../audio/soundEngine'
@@ -13,7 +15,9 @@ export default function MapScreen() {
   const currentPlayerIdx = useGameStore(s => s.currentPlayerIdx)
   const players = useGameStore(s => s.players)
   const setPhase = useGameStore(s => s.setPhase)
-  const { t } = useLang()
+  const buyPowerUp = useGameStore(s => s.buyPowerUp)
+  const { t, lang } = useLang()
+  const [shopOpen, setShopOpen] = useState(false)
 
   const player = players[currentPlayerIdx]
   const char = player ? characters.find(c => c.id === player.characterId) : null
@@ -83,8 +87,70 @@ export default function MapScreen() {
               <span><CharacterIcon id={char?.id} size={28} /></span>
               <span>{t.turnOf(player.name)}</span>
               <span className={styles.bannerBerries}>🍖 {player.berries}</span>
+              {player.powerUp && (
+                <span className={styles.activePowerUp} title={POWERUPS.find(p => p.id === player.powerUp)?.label[lang]}>
+                  {POWERUPS.find(p => p.id === player.powerUp)?.emoji}
+                </span>
+              )}
+              <button
+                className={styles.shopBtn}
+                onClick={() => { sounds.click(); setShopOpen(true) }}
+                aria-label="Tienda"
+              >🛒</button>
             </motion.div>
           )}
+
+          <AnimatePresence>
+            {shopOpen && (
+              <motion.div
+                className={styles.shopOverlay}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setShopOpen(false)}
+              >
+                <motion.div
+                  className={styles.shopPanel}
+                  initial={{ scale: 0.85, y: 20 }}
+                  animate={{ scale: 1, y: 0 }}
+                  exit={{ scale: 0.85, y: 20 }}
+                  onClick={e => e.stopPropagation()}
+                >
+                  <div className={styles.shopTitle}>⚓ {t.shopTitle}</div>
+                  <div className={styles.shopBerries}>🍖 {player?.berries}</div>
+                  <div className={styles.shopGrid}>
+                    {POWERUPS.map(pu => {
+                      const canAfford = (player?.berries ?? 0) >= pu.cost
+                      const hasOne = !!player?.powerUp
+                      const isOwned = player?.powerUp === pu.id
+                      return (
+                        <div
+                          key={pu.id}
+                          className={`${styles.shopCard} ${isOwned ? styles.shopOwned : ''} ${!canAfford && !isOwned ? styles.shopCantAfford : ''}`}
+                        >
+                          <span className={styles.shopEmoji}>{pu.emoji}</span>
+                          <span className={styles.shopLabel}>{pu.label[lang]}</span>
+                          <span className={styles.shopDesc}>{pu.desc[lang]}</span>
+                          <button
+                            className={styles.shopBuyBtn}
+                            disabled={!canAfford || hasOne}
+                            onClick={() => {
+                              sounds.coin()
+                              buyPowerUp(currentPlayerIdx, pu.id, pu.cost)
+                              setShopOpen(false)
+                            }}
+                          >
+                            {isOwned ? '✓' : `🍖 ${pu.cost}`}
+                          </button>
+                        </div>
+                      )
+                    })}
+                  </div>
+                  <button className={styles.shopClose} onClick={() => setShopOpen(false)}>✕</button>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {sorted.length > 1 ? (
             <motion.div

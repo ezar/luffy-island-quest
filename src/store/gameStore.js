@@ -31,7 +31,7 @@ export const useGameStore = create(
        * @param {'easy'|'hard'} difficulty
        */
       startGame: (players, difficulty) => set({
-        players: players.map((p, i) => ({ ...p, id: i, berries: 0, stars: 0 })),
+        players: players.map((p, i) => ({ ...p, id: i, berries: 0, stars: 0, powerUp: null })),
         difficulty,
         currentPlayerIdx: 0,
         currentIslandIdx: 0,
@@ -58,7 +58,15 @@ export const useGameStore = create(
         },
         players: state.players.map((p, i) =>
           i === playerIdx
-            ? { ...p, berries: p.berries + berries, stars: p.stars + stars }
+            ? { ...p, berries: p.berries + berries, stars: p.stars + stars, powerUp: null }
+            : p
+        ),
+      })),
+
+      buyPowerUp: (playerIdx, powerUpId, cost) => set(state => ({
+        players: state.players.map((p, i) =>
+          i === playerIdx && p.berries >= cost
+            ? { ...p, berries: p.berries - cost, powerUp: powerUpId }
             : p
         ),
       })),

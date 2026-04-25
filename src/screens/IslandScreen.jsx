@@ -43,11 +43,24 @@ export default function IslandScreen() {
   const char = player ? characters.find(c => c.id === player.characterId) : null
   const Minigame = MINIGAME_MAP[island.minigame]
 
+  const abilityId = char?.ability?.id ?? null
+  const powerUpId = player?.powerUp ?? null
+
+  // Numeric bonuses passed to minigames (ability + power-up combined)
+  const bonusTime     = (abilityId === 'timeBonus'     ? 15 : 0) + (powerUpId === 'wind'   ? 20 : 0)
+  const bonusLives    = (abilityId === 'extraLife'     ? 1  : 0) + (powerUpId === 'nakama' ? 1  : 0)
+  const bonusAttempts = (abilityId === 'extraAttempt'  ? 1  : 0) + (powerUpId === 'nakama' ? 1  : 0)
+  const easyTarget    = abilityId === 'easyTarget'
+
   const handleMinigameComplete = useCallback((stars, berries) => {
-    const bonus = char?.ability?.id === 'berryBonus' ? Math.round(berries * 0.3) : 0
-    recordResult(currentIslandIdx, currentPlayerIdx, stars, berries + bonus)
+    let b = berries
+    let s = stars
+    if (abilityId === 'berryBonus') b = Math.round(b * 1.3)
+    if (powerUpId  === 'feast')     b = Math.round(b * 1.5)
+    if (powerUpId  === 'luck')      s = Math.max(2, s)
+    recordResult(currentIslandIdx, currentPlayerIdx, s, b)
     setPhase('result')
-  }, [recordResult, currentIslandIdx, currentPlayerIdx, setPhase, char])
+  }, [recordResult, currentIslandIdx, currentPlayerIdx, setPhase, abilityId, powerUpId])
 
   return (
     <div className={styles.screen}>
@@ -138,7 +151,10 @@ export default function IslandScreen() {
               <Minigame
                 difficulty={difficulty}
                 onComplete={handleMinigameComplete}
-                ability={char?.ability?.id}
+                bonusTime={bonusTime}
+                bonusLives={bonusLives}
+                bonusAttempts={bonusAttempts}
+                easyTarget={easyTarget}
               />
             </Suspense>
           </motion.div>

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
 import { useLang } from '../i18n/useLang'
@@ -7,9 +8,16 @@ import CharacterIcon from '../components/CharacterIcon'
 import styles from './EndScreen.module.css'
 
 export default function EndScreen() {
-  const players = useGameStore(s => s.players)
-  const resetGame = useGameStore(s => s.resetGame)
+  const players    = useGameStore(s => s.players)
+  const difficulty = useGameStore(s => s.difficulty)
+  const resetGame      = useGameStore(s => s.resetGame)
+  const saveHighScores = useGameStore(s => s.saveHighScores)
   const { t } = useLang()
+
+  useEffect(() => {
+    if (players.length > 0) saveHighScores(players, difficulty)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const sorted = [...players].sort((a, b) =>
     b.berries !== a.berries ? b.berries - a.berries : b.stars - a.stars

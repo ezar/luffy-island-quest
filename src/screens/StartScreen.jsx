@@ -10,7 +10,12 @@ import styles from './StartScreen.module.css'
 
 export default function StartScreen() {
   const startGame = useGameStore(s => s.startGame)
+  const profiles  = useGameStore(s => s.profiles)
   const { t, lang } = useLang()
+
+  const topScores = Object.values(profiles)
+    .sort((a, b) => b.bestBerries - a.bestBerries || b.bestStars - a.bestStars)
+    .slice(0, 5)
   const [numPlayers, setNumPlayers] = useState(1)
   const [assignments, setAssignments] = useState({})
   const [names, setNames] = useState({})
@@ -158,6 +163,42 @@ export default function StartScreen() {
                 )
               })}
             </div>
+          </motion.div>
+
+          <motion.div
+            className={styles.hallBox}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <div className={styles.hallTitle}>{t.hallOfFame}</div>
+            {topScores.length === 0 ? (
+              <div className={styles.hallEmpty}>{t.noRecords}</div>
+            ) : (
+              <div className={styles.hallList}>
+                {topScores.map((entry, idx) => {
+                  const char = characters.find(c => c.id === entry.characterId)
+                  const medals = ['🥇','🥈','🥉','4️⃣','5️⃣']
+                  return (
+                    <div key={idx} className={styles.hallRow} style={char ? { borderColor: char.color } : {}}>
+                      <span className={styles.hallMedal}>{medals[idx]}</span>
+                      <span className={styles.hallChar}><CharacterIcon id={entry.characterId} size={28} /></span>
+                      <div className={styles.hallInfo}>
+                        <span className={styles.hallName}>{entry.name}</span>
+                        <span className={styles.hallGames}>{t.gamesPlayedLabel(entry.gamesPlayed)}</span>
+                      </div>
+                      <div className={styles.hallScore}>
+                        <span className={styles.hallBerries}>🍖 {entry.bestBerries}</span>
+                        <span className={styles.hallStars}>⭐ {entry.bestStars}</span>
+                        <span className={`${styles.hallDiff} ${entry.difficulty === 'hard' ? styles.hallDiffHard : ''}`}>
+                          {entry.difficulty === 'hard' ? t.diffHardBadge : t.diffEasyBadge}
+                        </span>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </motion.div>
 
           <motion.button

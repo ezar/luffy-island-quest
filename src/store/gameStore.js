@@ -21,7 +21,7 @@ export const useGameStore = create(
       islandResults: {},   // { islandIdx: { playerIdx: {stars, berries} } }
 
       // ── Estado persistente ────────────────────────────
-      profiles: {},  // { playerId: {name, characterId, highScores:[]} }
+      profiles: {},  // { key: {name, characterId, bestBerries, bestStars, gamesPlayed, lastPlayed, difficulty} }
 
       // ── Acciones ──────────────────────────────────────
 
@@ -98,6 +98,24 @@ export const useGameStore = create(
           set({ currentPlayerIdx: next, phase: 'map' })
         }
       },
+
+      saveHighScores: (players, difficulty) => set(state => {
+        const updated = { ...state.profiles }
+        players.forEach(player => {
+          const key = `${player.characterId}__${player.name.toLowerCase().trim()}`
+          const ex = updated[key]
+          updated[key] = {
+            name: player.name,
+            characterId: player.characterId,
+            bestBerries: ex ? Math.max(ex.bestBerries, player.berries) : player.berries,
+            bestStars:   ex ? Math.max(ex.bestStars,   player.stars)   : player.stars,
+            gamesPlayed: ex ? ex.gamesPlayed + 1 : 1,
+            lastPlayed:  new Date().toISOString(),
+            difficulty,
+          }
+        })
+        return { profiles: updated }
+      }),
 
       resetGame: () => set({
         players: [],

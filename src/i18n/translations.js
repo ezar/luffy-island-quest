@@ -105,6 +105,13 @@ export const translations = {
       easyTarget:   { label: '🍽️ Objetivo -1',      hint: '¡Sanji ya cocinó parte de la carne!' },
     },
 
+    // Hall of Fame
+    hallOfFame: '🏆 Mejores Piratas',
+    noRecords: 'Aún no hay récords',
+    gamesPlayedLabel: (n) => `${n} partida${n === 1 ? '' : 's'}`,
+    diffEasyBadge: 'Fácil',
+    diffHardBadge: 'Difícil',
+
     // Language toggle
     langToggle: 'EN',
   },
@@ -214,6 +221,13 @@ export const translations = {
       extraAttempt: { label: '🔑 +1 Attempt',       hint: "Usopp's aim never misses!" },
       easyTarget:   { label: '🍽️ Target -1',        hint: 'Sanji already cooked some meat!' },
     },
+
+    // Hall of Fame
+    hallOfFame: '🏆 Hall of Fame',
+    noRecords: 'No records yet',
+    gamesPlayedLabel: (n) => `${n} game${n === 1 ? '' : 's'}`,
+    diffEasyBadge: 'Easy',
+    diffHardBadge: 'Hard',
 
     // Language toggle
     langToggle: 'ES',

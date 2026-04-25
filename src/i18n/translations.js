@@ -69,8 +69,11 @@ export const translations = {
     dodgeLost: '💀 ¡Luffy fue fulminado!',
 
     // PuzzleGame
-    wallClue: 'Pistas del muro:',
-    robinNeedsHelp: '🌸 Robin: ¡Necesito tu ayuda!',
+    attemptsLeft: (n) => `🔑 ${n} ${n === 1 ? 'intento' : 'intentos'}`,
+    mastermindGreen: 'posición correcta',
+    mastermindYellow: 'símbolo correcto',
+    mastermindLost: '💀 ¡El código era!',
+    robinNeedsHelp: '🌸 Robin: ¡Descifra el código!',
     robinFree: '🌸 Robin: ¡Gracias! ¡Libertad!',
 
     // FinalGame
@@ -154,8 +157,11 @@ export const translations = {
     dodgeLost: '💀 Luffy was struck down!',
 
     // PuzzleGame
-    wallClue: 'Wall clues:',
-    robinNeedsHelp: '🌸 Robin: I need your help!',
+    attemptsLeft: (n) => `🔑 ${n} ${n === 1 ? 'attempt' : 'attempts'}`,
+    mastermindGreen: 'right place',
+    mastermindYellow: 'right symbol',
+    mastermindLost: '💀 The code was!',
+    robinNeedsHelp: '🌸 Robin: Crack the code!',
     robinFree: '🌸 Robin: Thank you! Freedom!',
 
     // FinalGame

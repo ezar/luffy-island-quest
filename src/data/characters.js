@@ -1,4 +1,4 @@
-/** @type {Array<{id:string,name:string,color:string,accentColor:string,emoji:string,catchphrase:string,description:string}>} */
+/** @type {Array<{id:string,name:string,color:string,accentColor:string,emoji:string,catchphrase:string,description:string,ability:{id:string}}>} */
 export const characters = [
   {
     id: 'luffy',
@@ -8,6 +8,7 @@ export const characters = [
     emoji: '👒',
     catchphrase: '¡Voy a ser el Rey de los Piratas!',
     description: 'Capitán. Come carne. Estira el cuerpo.',
+    ability: { id: 'berryBonus' },
   },
   {
     id: 'zoro',
@@ -17,6 +18,7 @@ export const characters = [
     emoji: '⚔️',
     catchphrase: '¡Nada me impide llegar a la cima!',
     description: 'El mejor espadachín. Se pierde siempre.',
+    ability: { id: 'extraLife' },
   },
   {
     id: 'nami',
@@ -26,6 +28,7 @@ export const characters = [
     emoji: '🗺️',
     catchphrase: '¡Las Berries son mi vida!',
     description: 'Navegante. Ama el dinero y los mapas.',
+    ability: { id: 'timeBonus' },
   },
   {
     id: 'usopp',
@@ -35,6 +38,7 @@ export const characters = [
     emoji: '🎯',
     catchphrase: '¡Soy el valiente guerrero del mar!',
     description: 'Francotirador. Cuenta historias increíbles.',
+    ability: { id: 'extraAttempt' },
   },
   {
     id: 'sanji',
@@ -44,5 +48,6 @@ export const characters = [
     emoji: '🍽️',
     catchphrase: '¡Un caballero nunca abandona a una dama!',
     description: 'Cocinero. Patea con elegancia.',
+    ability: { id: 'easyTarget' },
   },
 ]

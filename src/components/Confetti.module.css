@@ -1,0 +1,24 @@
+.container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.particle {
+  position: absolute;
+  top: -12px;
+  border-radius: 2px;
+  animation: fall linear both;
+  opacity: 0;
+}
+
+.circle { border-radius: 50%; }
+.rect   { border-radius: 1px; }
+
+@keyframes fall {
+  0%   { transform: translateY(0) translateX(0) rotate(0deg);   opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(105vh) translateX(var(--wobble)) rotate(600deg); opacity: 0; }
+}

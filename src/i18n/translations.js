@@ -14,6 +14,8 @@ export const translations = {
     mapTitle: '☠ Gran Line ☠',
     tapToPlay: 'Toca tu isla para comenzar',
     turnOf: (name) => `¡Turno de ${name}!`,
+    rivalryLeading: '🏆 ¡Vas en cabeza!',
+    rivalryBehind: (name, gap) => `⚔️ ${name} te lleva ${gap} 🍖`,
 
     // IslandScreen
     startMinigame: '⚓ ¡Empezar!',
@@ -83,6 +85,24 @@ export const translations = {
     finalWon: '👑 ¡ONE PIECE!',
     finalLost: '💀 ¡Error!',
 
+    // Pirate titles (EndScreen)
+    pirateTitle: (berries) => {
+      if (berries >= 1000) return '👑 Rey Pirata'
+      if (berries >= 750)  return '⚓ Almirante'
+      if (berries >= 500)  return '⚔️ Capitán'
+      if (berries >= 250)  return '🏴‍☠️ Corsario'
+      return '🌊 Marinero'
+    },
+
+    // Character abilities (IslandScreen)
+    abilities: {
+      berryBonus:   { label: '🍖 +30% Berries',   hint: '¡El apetito de Luffy da sus frutos!' },
+      extraLife:    { label: '❤️ +1 Vida',          hint: '¡La resistencia de Zoro te protege!' },
+      timeBonus:    { label: '⏱️ +15s Tiempo',      hint: '¡La previsión de Nami te da más tiempo!' },
+      extraAttempt: { label: '🔑 +1 Intento',       hint: '¡La puntería de Usopp no falla!' },
+      easyTarget:   { label: '🍽️ Objetivo -1',      hint: '¡Sanji ya cocinó parte de la carne!' },
+    },
+
     // Language toggle
     langToggle: 'EN',
   },
@@ -102,6 +122,8 @@ export const translations = {
     mapTitle: '☠ Grand Line ☠',
     tapToPlay: 'Tap your island to begin',
     turnOf: (name) => `${name}'s turn!`,
+    rivalryLeading: '🏆 You\'re in the lead!',
+    rivalryBehind: (name, gap) => `⚔️ ${name} is ahead by ${gap} 🍖`,
 
     // IslandScreen
     startMinigame: '⚓ Start!',
@@ -170,6 +192,24 @@ export const translations = {
     errors: (n, max) => `❌ ${n}/${max}`,
     finalWon: '👑 ONE PIECE!',
     finalLost: '💀 Wrong!',
+
+    // Pirate titles (EndScreen)
+    pirateTitle: (berries) => {
+      if (berries >= 1000) return '👑 Pirate King'
+      if (berries >= 750)  return '⚓ Admiral'
+      if (berries >= 500)  return '⚔️ Captain'
+      if (berries >= 250)  return '🏴‍☠️ Privateer'
+      return '🌊 Sailor'
+    },
+
+    // Character abilities (IslandScreen)
+    abilities: {
+      berryBonus:   { label: '🍖 +30% Berries',   hint: "Luffy's appetite pays off!" },
+      extraLife:    { label: '❤️ +1 Life',          hint: "Zoro's endurance protects you!" },
+      timeBonus:    { label: '⏱️ +15s Time',        hint: "Nami's foresight gives you more time!" },
+      extraAttempt: { label: '🔑 +1 Attempt',       hint: "Usopp's aim never misses!" },
+      easyTarget:   { label: '🍽️ Target -1',        hint: 'Sanji already cooked some meat!' },
+    },
 
     // Language toggle
     langToggle: 'ES',

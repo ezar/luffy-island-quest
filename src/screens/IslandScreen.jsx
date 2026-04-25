@@ -43,9 +43,10 @@ export default function IslandScreen() {
   const Minigame = MINIGAME_MAP[island.minigame]
 
   const handleMinigameComplete = useCallback((stars, berries) => {
-    recordResult(currentIslandIdx, currentPlayerIdx, stars, berries)
+    const bonus = char?.ability?.id === 'berryBonus' ? Math.round(berries * 0.3) : 0
+    recordResult(currentIslandIdx, currentPlayerIdx, stars, berries + bonus)
     setPhase('result')
-  }, [recordResult, currentIslandIdx, currentPlayerIdx, setPhase])
+  }, [recordResult, currentIslandIdx, currentPlayerIdx, setPhase, char])
 
   return (
     <div className={styles.screen}>
@@ -70,6 +71,13 @@ export default function IslandScreen() {
                   <div className={styles.playerBadge} style={{ borderColor: char.color }}>
                     <span><CharacterIcon id={char.id} size={32} /></span>
                     <span>{t.turnOf(player.name)}</span>
+                  </div>
+                )}
+
+                {char?.ability && t.abilities?.[char.ability.id] && (
+                  <div className={styles.abilityBadge} style={{ borderColor: char.color }}>
+                    <span className={styles.abilityLabel}>{t.abilities[char.ability.id].label}</span>
+                    <span className={styles.abilityHint}>{t.abilities[char.ability.id].hint}</span>
                   </div>
                 )}
 
@@ -111,6 +119,7 @@ export default function IslandScreen() {
               <Minigame
                 difficulty={difficulty}
                 onComplete={handleMinigameComplete}
+                ability={char?.ability?.id}
               />
             </Suspense>
           </motion.div>

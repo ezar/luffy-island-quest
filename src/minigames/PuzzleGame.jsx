@@ -30,12 +30,12 @@ function getFeedback(guess, secret) {
   return { green, yellow }
 }
 
-export default function PuzzleGame({ difficulty, onComplete, timeLimit = null }) {
+export default function PuzzleGame({ difficulty, onComplete, timeLimit = null, ability = null }) {
   const { t } = useLang()
   const codeLen     = difficulty === 'easy' ? 3 : 4
   const paletteSize = difficulty === 'easy' ? 4 : 5
-  const maxAttempts = difficulty === 'easy' ? 5 : 4
-  const defaultTime = difficulty === 'easy' ? 90 : 60
+  const maxAttempts = (difficulty === 'easy' ? 5 : 4) + (ability === 'extraAttempt' ? 1 : 0)
+  const defaultTime = (difficulty === 'easy' ? 90 : 60) + (ability === 'timeBonus' ? 15 : 0)
   const totalTime   = timeLimit ?? defaultTime
 
   const palette      = PALETTE.slice(0, paletteSize)

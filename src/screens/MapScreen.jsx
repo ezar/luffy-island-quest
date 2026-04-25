@@ -34,12 +34,10 @@ export default function MapScreen() {
           {islands.map((island, idx) => {
             const state = getIslandState(idx)
             return (
-              <motion.button
+              <button
                 key={island.id}
                 className={`${styles.island} ${styles[state]}`}
                 style={{ left: `${island.x}%`, top: `${island.y}%`, '--icolor': island.color }}
-                whileHover={state === 'current' ? { scale: 1.25 } : {}}
-                whileTap={state === 'current' ? { scale: 0.92 } : {}}
                 onClick={() => state === 'current' && setPhase('island')}
                 disabled={state !== 'current'}
                 aria-label={island.name}
@@ -47,7 +45,7 @@ export default function MapScreen() {
                 <span className={styles.islandEmoji}>{island.emoji}</span>
                 <span className={styles.islandLabel}>{island.name}</span>
                 {state === 'completed' && <span className={styles.checkmark}>✓</span>}
-              </motion.button>
+              </button>
             )
           })}
 

@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react'
+import { sounds } from '../audio/soundEngine'
 import styles from './StarRating.module.css'
 
-/**
- * Muestra 1-3 estrellas con animación de aparición escalonada.
- * @param {object} props
- * @param {number} props.stars - 1, 2 o 3
- * @param {boolean} [props.animate=true] - si animar la aparición
- */
 export default function StarRating({ stars, animate = true }) {
   const [shown, setShown] = useState(animate ? 0 : stars)
 
@@ -15,7 +10,10 @@ export default function StarRating({ stars, animate = true }) {
     setShown(0)
     const timers = []
     for (let i = 1; i <= stars; i++) {
-      timers.push(setTimeout(() => setShown(i), i * 450))
+      timers.push(setTimeout(() => {
+        setShown(i)
+        sounds.star()
+      }, i * 450))
     }
     return () => timers.forEach(clearTimeout)
   }, [stars, animate])

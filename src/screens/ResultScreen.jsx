@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
 import { islands } from '../data/islands'
@@ -7,6 +8,7 @@ import OceanBackground from '../components/OceanBackground'
 import CharacterIcon from '../components/CharacterIcon'
 import Confetti from '../components/Confetti'
 import { useLang } from '../i18n/useLang'
+import { sounds } from '../audio/soundEngine'
 import styles from './ResultScreen.module.css'
 
 export default function ResultScreen() {
@@ -25,6 +27,17 @@ export default function ResultScreen() {
 
   const isLastIsland = currentIslandIdx >= islands.length - 1
   const allPlayersOnIsland = Object.keys(islandResults[currentIslandIdx] || {}).length >= players.length
+
+  useEffect(() => {
+    const delay = result.stars * 450 + 300
+    const t1 = setTimeout(() => {
+      if (result.stars === 3) sounds.fanfare()
+      else if (result.stars === 2) sounds.win()
+      else sounds.lose()
+    }, delay)
+    const t2 = setTimeout(() => sounds.coin(), 1900)
+    return () => { clearTimeout(t1); clearTimeout(t2) }
+  }, [result.stars, result.berries])
 
   return (
     <div className={styles.screen}>

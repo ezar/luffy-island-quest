@@ -5,6 +5,7 @@ import { islands } from '../data/islands'
 import { characters } from '../data/characters'
 import OceanBackground from '../components/OceanBackground'
 import CharacterIcon from '../components/CharacterIcon'
+import { sounds } from '../audio/soundEngine'
 import styles from './MapScreen.module.css'
 
 export default function MapScreen() {
@@ -51,7 +52,7 @@ export default function MapScreen() {
                 key={island.id}
                 className={`${styles.island} ${styles[state]}`}
                 style={{ left: `${island.x}%`, top: `${island.y}%`, '--icolor': island.color }}
-                onClick={() => state === 'current' && setPhase('island')}
+                onClick={() => { if (state === 'current') { sounds.click(); setPhase('island') } }}
                 disabled={state !== 'current'}
                 aria-label={island.name}
               >

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useLang } from '../i18n/useLang'
+import { sounds } from '../audio/soundEngine'
 import styles from './PuzzleGame.module.css'
 
 const PALETTE = ['🍖', '⚓', '🌸', '⚔️', '💎']
@@ -33,7 +34,7 @@ function getFeedback(guess, secret) {
 export default function PuzzleGame({ difficulty, onComplete, timeLimit = null, ability = null }) {
   const { t } = useLang()
   const codeLen     = difficulty === 'easy' ? 3 : 4
-  const paletteSize = difficulty === 'easy' ? 4 : 5
+  const paletteSize = 5
   const maxAttempts = (difficulty === 'easy' ? 5 : 4) + (ability === 'extraAttempt' ? 1 : 0)
   const defaultTime = (difficulty === 'easy' ? 90 : 60) + (ability === 'timeBonus' ? 15 : 0)
   const totalTime   = timeLimit ?? defaultTime
@@ -57,6 +58,7 @@ export default function PuzzleGame({ difficulty, onComplete, timeLimit = null, a
     doneRef.current = true
     const stars  = won ? (used === 1 ? 3 : used <= 3 ? 2 : 1) : 1
     const berries = won ? Math.max(50, (maxAttempts - used + 1) * 80 + timeRef.current * 2) : 0
+    if (won) sounds.win(); else sounds.lose()
     setTimeout(() => cbRef.current(stars, berries), 1600)
   }, [maxAttempts])
 
@@ -178,7 +180,7 @@ export default function PuzzleGame({ difficulty, onComplete, timeLimit = null, a
             <button
               key={sym}
               className={`${styles.symBtn} ${current.includes(sym) ? styles.symUsed : ''}`}
-              onClick={() => addSymbol(sym)}
+              onClick={() => { sounds.click(); addSymbol(sym) }}
               disabled={current.includes(sym) || current.length >= codeLen}
             >
               {sym}

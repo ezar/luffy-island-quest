@@ -1,4 +1,5 @@
 import { lazy, Suspense, useCallback } from 'react'
+import { sounds } from '../audio/soundEngine'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
 import { useLang } from '../i18n/useLang'
@@ -91,7 +92,7 @@ export default function IslandScreen() {
 
                 <motion.button
                   className={styles.playBtn}
-                  onClick={() => setPhase('minigame')}
+                  onClick={() => { sounds.click(); setPhase('minigame') }}
                   whileHover={{ scale: 1.06, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >

@@ -5,6 +5,7 @@ import { useLang } from '../i18n/useLang'
 import { characters } from '../data/characters'
 import OceanBackground from '../components/OceanBackground'
 import CharacterIcon from '../components/CharacterIcon'
+import { sounds } from '../audio/soundEngine'
 import styles from './StartScreen.module.css'
 
 export default function StartScreen() {
@@ -36,6 +37,7 @@ export default function StartScreen() {
   const allReady = Array.from({ length: numPlayers }, (_, i) => i).every(i => assignments[i])
 
   const handleStart = () => {
+    sounds.click()
     const players = Array.from({ length: numPlayers }, (_, i) => ({
       name: lang === 'es' ? `Jugador ${i + 1}` : `Player ${i + 1}`,
       characterId: assignments[i],

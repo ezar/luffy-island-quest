@@ -74,11 +74,15 @@ export default function DodgeGame({ difficulty, onComplete, timeLimit = null, bo
   // Spawn bolts
   useEffect(() => {
     if (status !== 'playing') return
+    const aimedChance = difficulty === 'hard' ? 0.65 : 0.45
     const id = setInterval(() => {
       if (statusRef.current !== 'playing') return
       const numBolts = difficulty === 'hard' ? (Math.random() > 0.5 ? 2 : 1) : 1
       for (let i = 0; i < numBolts; i++) {
-        const x = 10 + Math.random() * 80
+        const aimed = Math.random() < aimedChance
+        const x = aimed
+          ? Math.max(10, Math.min(90, luffyXRef.current + (Math.random() - 0.5) * 18))
+          : 10 + Math.random() * 80
         const bolt = { id: boltIdRef.current++, x, y: -5 }
         boltsRef.current = [...boltsRef.current, bolt]
       }

@@ -35,7 +35,7 @@ export default function PuzzleGame({ difficulty, onComplete, timeLimit = null, b
   const { t } = useLang()
   const codeLen     = difficulty === 'easy' ? 3 : 4
   const paletteSize = 5
-  const maxAttempts = (difficulty === 'easy' ? 5 : 4) + bonusAttempts
+  const maxAttempts = (difficulty === 'easy' ? 6 : 5) + bonusAttempts
   const defaultTime = (difficulty === 'easy' ? 90 : 60) + bonusTime
   const totalTime   = timeLimit ?? defaultTime
 
@@ -127,6 +127,39 @@ export default function PuzzleGame({ difficulty, onComplete, timeLimit = null, b
         <span className={styles.dotYellow} /> {t.mastermindYellow}
       </div>
 
+      {/* Symbol palette */}
+      {status === 'playing' && (
+        <div className={styles.palette}>
+          {palette.map(sym => (
+            <button
+              key={sym}
+              className={`${styles.symBtn} ${current.includes(sym) ? styles.symUsed : ''}`}
+              onClick={() => { sounds.click(); addSymbol(sym) }}
+              disabled={current.includes(sym) || current.length >= codeLen}
+            >
+              {sym}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Active guess row */}
+      {status === 'playing' && (
+        <div className={styles.currentRow}>
+          {Array.from({ length: codeLen }).map((_, i) => (
+            <span key={i} className={`${styles.slot} ${current[i] ? styles.slotFilled : ''}`}>
+              {current[i] ?? ''}
+            </span>
+          ))}
+          <button className={styles.deleteBtn} onClick={removeLast} disabled={current.length === 0}>⌫</button>
+          <button
+            className={`${styles.submitBtn} ${current.length === codeLen ? styles.submitReady : ''}`}
+            onClick={submitGuess}
+            disabled={current.length !== codeLen}
+          >✓</button>
+        </div>
+      )}
+
       {/* Guess history */}
       <div className={styles.guessGrid}>
         {guesses.map((g, i) => (
@@ -155,39 +188,6 @@ export default function PuzzleGame({ difficulty, onComplete, timeLimit = null, b
           </div>
         ))}
       </div>
-
-      {/* Active guess row */}
-      {status === 'playing' && (
-        <div className={styles.currentRow}>
-          {Array.from({ length: codeLen }).map((_, i) => (
-            <span key={i} className={`${styles.slot} ${current[i] ? styles.slotFilled : ''}`}>
-              {current[i] ?? ''}
-            </span>
-          ))}
-          <button className={styles.deleteBtn} onClick={removeLast} disabled={current.length === 0}>⌫</button>
-          <button
-            className={`${styles.submitBtn} ${current.length === codeLen ? styles.submitReady : ''}`}
-            onClick={submitGuess}
-            disabled={current.length !== codeLen}
-          >✓</button>
-        </div>
-      )}
-
-      {/* Symbol palette */}
-      {status === 'playing' && (
-        <div className={styles.palette}>
-          {palette.map(sym => (
-            <button
-              key={sym}
-              className={`${styles.symBtn} ${current.includes(sym) ? styles.symUsed : ''}`}
-              onClick={() => { sounds.click(); addSymbol(sym) }}
-              disabled={current.includes(sym) || current.length >= codeLen}
-            >
-              {sym}
-            </button>
-          ))}
-        </div>
-      )}
 
       {/* End overlay */}
       {status !== 'playing' && (
